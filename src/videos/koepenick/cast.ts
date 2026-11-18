@@ -311,7 +311,7 @@ const shot3 = (out: Stage, cam: CamInfo, t: number, f: number) => {
   }
 };
 const shot4 = (out: Stage, cam: CamInfo, t: number, f: number) => {
-  const front = Math.max(22.6, 30 - 1.4 * (t - 14.6)), stop = front <= 22.6, raise = smooth((f - 539) / 5);
+  const front = Math.max(22.6, 25.5 - 1.4 * (t - 14.6)), stop = front <= 22.6, raise = smooth((f - 539) / 5);
   squad(out, cam, t, 10, 0, front, 0, -1, stop ? 0 : 1.4, (i) => ({ expr: at(t, 542) && i % 2 ? "shock" : "neutral" }));
   walker(out, cam, t, VC, 0.1, 20.4, 0, 1, 0, { expr: at(t, 528) ? "grin" : "stern", prop: f >= 537 ? ["saber", q(raise, 20)] : "point" });
 };
