@@ -414,7 +414,7 @@ const hatOn = (p: Pen, o: Outfit, hp: P2[], H: Blob, cx: number, hc: number, lig
     if (arc.length < 3) return;
     if (o.hat === "bald") { // only the side fringe
       const col = o.hair ?? "#9a948c";
-      for (const s2 of side ? [-1] : [-1, 1]) p.ell(cx + s2 * 0.93 * H.a, hc - 0.05 * H.b, 0.16 * H.a, 0.3 * H.b, col, ow * 0.6);
+      for (const s2 of side ? [-1] : [-1, 1]) { const fp = blobPts(cx + s2 * 0.86 * H.a, hc + 0.05 * H.b, { ...H, a: 0.17 * H.a, b: 0.34 * H.b, asym: 0, egg: 0, rot: rad(s2 * 12), seed: H.seed + 9 }).filter(([x2]) => s2 * (x2 - cx) > 0.9 * H.a); if (fp.length > 2) { p.poly(fp, col, 0); p.stroke(fp, ow * 0.5); } }
       return;
     }
     if (isHair(o.hat)) { // scalloped lower edge
