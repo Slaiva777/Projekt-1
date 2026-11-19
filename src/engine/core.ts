@@ -121,7 +121,7 @@ const q = (v: number, n = 120) => Math.round(v * n) / n;
 /** head-shape seed: 7 shapes, so marching soldiers in step still share canvases */
 const seedOf = (i: number) => ((i * 5 + 3) % 7) + 1;
 /** drawing resolution by distance: [canvas w, h, scale from the 600 x 1000 design]; sized for the 1440 x 2560 final */
-const tier = (d: number): [number, number, number] =>
+export const tier = (d: number): [number, number, number] =>
   d < 3.2 ? [1800, 3000, 3.0] : d < 6.5 ? [1080, 1800, 1.8] : d < 16 ? [480, 800, 0.8] : [240, 400, 0.4];
 
 // ---------------- light ----------------
@@ -147,7 +147,7 @@ const findSun = (cam: CamInfo, out: THREE.Vector3) => {
   return best ? out.copy(best.position).sub(best.target.position).normalize() : out;
 };
 /** canvas angle the sun comes FROM on an upright card facing the camera, in 45-degree steps (small texture cache) */
-const light2D = (cam: CamInfo, mirror: boolean) => {
+export const light2D = (cam: CamInfo, mirror: boolean) => {
   const sx = SUN.dot(cam.right) * (mirror ? -1 : 1), sy = -SUN.y;
   return Math.round(Math.atan2(sy, sx) / (Math.PI / 4)) * (Math.PI / 4);
 };
