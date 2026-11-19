@@ -24,3 +24,27 @@ npx remotion render src/index.ts KoepenickShort out/final/video_silent.mp4 --pro
   --concurrency=4 --gl=angle --browser-executable=<chrome-headless-shell> --codec=h264 --crf=18
 ffmpeg -i out/final/video_silent.mp4 -i koepenick/audio/mix.wav -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 192k -shortest koepenick/Hauptmann_von_Koepenick.mp4
 ```
+
+---
+
+# Serie 2: fünf weitere Shorts (Engine v2)
+
+| Video | Thema | Ordner |
+|---|---|---|
+| „Das Geld auf dem Meeresgrund“ | Geld: das Steingeld von Yap | `videos/geld`, `src/videos/geld` |
+| „Der Mann, der alles vergaß“ | Gedächtnis: Henry Molaison (H.M.) | `videos/gedaechtnis`, `src/videos/gedaechtnis` |
+| „Der Arzt, der Hände wusch“ | Gesundheit: Ignaz Semmelweis | `videos/gesundheit`, `src/videos/gesundheit` |
+| „Der Kran, der 300 Jahre wartete“ | Glaube: der Kölner Dom | `videos/glaube`, `src/videos/glaube` |
+| „Der Emu-Krieg“ | frei gewählt: Australien 1932 | `videos/emu`, `src/videos/emu` |
+
+Fakten und Quellen stehen jeweils in `videos/<name>/SCRIPT.md`, das fertige Video in `videos/<name>/<name>.mp4`.
+
+**Was neu ist (`src/engine/`):**
+- Stimme: Coqui „Thorsten VITS“ (22 kHz) statt Piper-low, Wort-Zeitstempel aus der Dauer-Ausrichtung des Modells (`tools/voice_vits.py`).
+- Mehr Leben: Passanten laufen im Hintergrund hin und her, Gruppen unterhalten sich, Vogelschwärme, Rauch, ziehende Wolken (`world.ts` → `life`).
+- Mehr Figuren-Vielfalt: Frisuren (Dutt, Zopf, lange Haare, Glatze), Hüte (Stroh, Melone, Schlapphut, Kopftuch, Schwesternhaube), Bärte, Brillen, Schürzen, Requisiten; Massen-Generator pro Epoche (`people.ts`); Emus.
+- Texturfehler behoben: keine Löcher mehr durch Ausblenden ferner Häuser, keine Z-Konflikte bei Boden/Belägen, 16× anisotrope Filterung, Gras/Sand/Weizen als eigene Maltexturen, Render-Puffer 0.8 statt 0.67.
+- Innenräume (`interior.ts`), Wasser (`world.ts`), Sturm/Unterwasser-Stimmungen pro Einstellung, Blitze.
+- Sound: gemeinsame Bibliothek mit Stilen (Insel, Walzer, Marsch, Country, Choral, ruhig) und vielen Effekten (`tools/soundlib.py`).
+
+Rendern: `scripts/render_video.sh <Composition> <name> <Frames>` (in Abschnitten, fortsetzbar).
