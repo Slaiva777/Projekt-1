@@ -3,3 +3,4 @@ out/
 *.wav
 !public/**/*.wav
 koepenick/audio/*.png
+.snap/
