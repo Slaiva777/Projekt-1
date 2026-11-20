@@ -6,6 +6,7 @@ import { GedaechtnisShort, GEDAECHTNIS_FRAMES } from "./videos/gedaechtnis";
 import { GesundheitShort, GESUNDHEIT_FRAMES } from "./videos/gesundheit";
 import { GlaubeShort, GLAUBE_FRAMES } from "./videos/glaube";
 import { EmuShort, EMU_FRAMES } from "./videos/emu";
+import { StyleTest, STYLE_FRAMES } from "./videos/geld3";
 
 const C = { fps: 30, width: 1080, height: 1920 };
 export const RemotionRoot: React.FC = () => (
@@ -15,6 +16,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="GedaechtnisShort" component={GedaechtnisShort} durationInFrames={GEDAECHTNIS_FRAMES} {...C} />
     <Composition id="GesundheitShort" component={GesundheitShort} durationInFrames={GESUNDHEIT_FRAMES} {...C} />
     <Composition id="GlaubeShort" component={GlaubeShort} durationInFrames={GLAUBE_FRAMES} {...C} />
+    <Composition id="StyleTest" component={StyleTest} durationInFrames={STYLE_FRAMES} {...C} />
     <Composition id="EmuShort" component={EmuShort} durationInFrames={EMU_FRAMES} {...C} />
   </>
 );
