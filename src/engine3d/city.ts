@@ -85,8 +85,9 @@ export const policeVan = (plate: string, seed: number, lightsOn = true) => {
   for (const z of [-1, 1]) { const m = emi("#2a6bff", 0); blues.push(m); g.add(M(BOX, m, [L / 2 + 0.035, 0.62, z * 0.35], [0.03, 0.06, 0.12])); }
   const pl = new THREE.PointLight("#2f6bff", 0, 16, 1.6); pl.position.set(0.9, H + 0.6, 0); g.add(pl);
   const ph = rng(seed)() * 2;
+  g.userData.on = lightsOn;
   g.userData.anim = (t: number) => {
-    if (!lightsOn) return;
+    if (!g.userData.on) { blues.forEach((m) => { m.emissiveIntensity = 0.25; }); pl.intensity = 0; return; }
     const k = (t * 2.4 + ph) % 1, a = k < 0.12 || (k > 0.24 && k < 0.36) ? 1 : 0, b = (k > 0.5 && k < 0.62) || (k > 0.74 && k < 0.86) ? 1 : 0;
     blues.forEach((m, i) => { m.emissiveIntensity = 0.4 + 9 * (i % 2 ? b : a); });
     pl.intensity = 18 * Math.max(a, b) + 2;
@@ -114,7 +115,8 @@ export const civilVan = (plate: string) => {
   for (let i = 0; i < 3; i++) { const m = emi("#2a62ff", 0); blues.push(m); g.add(M(SPH, m, [1.2 - i * 1.4, H + 0.08, 0.3 - i * 0.25], [0.11, 0.1, 0.11])); g.add(M(CYL, mat("#111", 0.5), [1.2 - i * 1.4, H + 0.02, 0.3 - i * 0.25], [0.12, 0.04, 0.12])); }
   const pl = new THREE.PointLight("#2f6bff", 0, 14, 1.6); pl.position.set(0, H + 0.6, 0); g.add(pl);
   g.userData.door = (u: number) => { door.position.x = 0.35 - 1.35 * u; door.position.z = W / 2 + 0.03 + 0.08 * Math.min(1, u * 4); };
-  g.userData.anim = (t: number) => { const k = (t * 2.1) % 1; blues.forEach((m, i) => { const on = ((k + i * 0.33) % 1) < 0.18; m.emissiveIntensity = on ? 10 : 0.3; }); pl.intensity = 14 * (k % 0.33 < 0.18 ? 1 : 0.3); };
+  g.userData.on = true;
+  g.userData.anim = (t: number) => { if (!g.userData.on) { blues.forEach((m) => { m.emissiveIntensity = 0.25; }); pl.intensity = 0; return; } const k = (t * 2.1) % 1; blues.forEach((m, i) => { const on = ((k + i * 0.33) % 1) < 0.18; m.emissiveIntensity = on ? 10 : 0.3; }); pl.intensity = 14 * (k % 0.33 < 0.18 ? 1 : 0.3); };
   g.userData.heat = 0.42;
   return shade(g);
 };

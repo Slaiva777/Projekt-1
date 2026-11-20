@@ -15,7 +15,7 @@ export type Mood = { sky: [string, string]; fog: [string, number, number]; sun: 
 export type SetUpdate = (f: number, t: number) => void;
 export type Built = { root: THREE.Object3D; update?: SetUpdate; mood: Mood; center: V3 };
 export type Shot3 = { a: number; b: number; set: string; cam: (f: number) => Cam; whip?: number /** direction of the whip into this shot */; dof?: number; thermal?: boolean; cut?: boolean /** hard cut, no whip */ };
-export type Word = { w: string; s: number; e: number };
+export type Word = { w: string; s: number; e: number; radio?: boolean };
 export type Def3 = { build: () => Record<string, Built>; shots: Shot3[]; words: Word[]; total: number; captionY?: number; bloom?: number; overlay?: (f: number) => React.ReactNode; grade?: (f: number) => string };
 
 const FPS = 30;
@@ -137,7 +137,7 @@ const Caption: React.FC<{ words: Word[]; f: number; y: number }> = ({ words, f, 
   const pop = Math.min(1, (t - cur.s + 0.03) / 0.08);
   return (
     <div style={{ position: "absolute", left: 0, right: 0, top: y, textAlign: "center", fontFamily: "Inter", fontWeight: 800, fontSize: 50,
-      color: "#fff", letterSpacing: 0.5, transform: `scale(${0.92 + 0.08 * pop})`,
+      color: cur.radio ? "#ffe08a" : "#fff", fontStyle: cur.radio ? "italic" : "normal", letterSpacing: 0.5, transform: `scale(${0.92 + 0.08 * pop})`,
       textShadow: "0 0 3px #000, 0 0 3px #000, 0 2px 6px rgba(0,0,0,0.85)", WebkitTextStroke: "1.5px #111" }}>{cur.w}</div>
   );
 };
