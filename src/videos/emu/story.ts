@@ -38,9 +38,10 @@ const S2a = (n: number) => zoom([-60, 38, 60], [10, 0, -10], 50, pushK(n, 172, 0
 const S2b = (n: number) => dolly(F(-4, 4.5, 20), F(0, 0.8, -6), pushK(n, 262, 0.0018), { fov: 50 });
 const S2c = (n: number) => dolly(F(1.6, 1.0, 5.0), F(0.4, 0.9, 1.4), pushK(n, 322, 0.0025), { fov: 42, roll: -0.03 });
 const S3a = (n: number) => dolly([FARM[0] - 3, 1.6, FARM[2] - 9], [FARM[0] - 1, 1.6, FARM[2] - 4.5], pushK(n, 391, 0.0022), { fov: 44 });
-const S3b = (n: number) => dolly([-12, 1.4, ROAD_Z + 9], [-22, 1.6, ROAD_Z], pushK(n, 457, 0.0018), { fov: 46 });
+/** travels alongside the arriving truck */
+const S3b = (n: number) => { const tr = truckAt(3, n / 30); return { pos: [tr.x + 8, 1.7, ROAD_Z + 7] as V3, look: [tr.x + 0.5, 1.5, ROAD_Z] as V3, fov: 46 }; };
 const S4a = (n: number) => dolly([-12.5, 1.6, ROAD_Z + 7.5], [-14.5, 1.4, ROAD_Z + 3.2], pushK(n, 530, 0.0025), { fov: 44 });
-const S4b = (n: number) => dolly([-15.5, 2.6, ROAD_Z + 4.2], [-16.4, 1.9, ROAD_Z], pushK(n, 567, 0.003, 0.006, 24), { fov: 40, roll: 0.03 });
+const S4b = (n: number) => dolly([-15.0, 2.2, ROAD_Z + 7.4], [-15.0, 1.5, ROAD_Z + 1.5], pushK(n, 567, 0.0012, 0.005, 24), { fov: 44, roll: 0.03 });
 const S5a = (n: number) => dolly([-12, 1.6, ROAD_Z + 6.6], [-14, 1.5, ROAD_Z + 3], pushK(n, 670, 0.0022), { fov: 42 });
 const S5b = (n: number) => dolly(F(-2.0, 1.5, 9.0), F(0, 1.3, 2), pushK(n, 758, 0.002), { fov: 46 });
 const S5c = (n: number) => dolly(F(-6, 9, 22), F(0, 0.5, 0), pushK(n, 823, 0.0018), { fov: 50, roll: 0.04 });
