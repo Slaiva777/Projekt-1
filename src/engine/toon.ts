@@ -835,6 +835,10 @@ export const bodySide = (p: Pen, o: Outfit, opts: SideOpts) => {
   const T: Blob = { a: (o.build === "stout" ? 0.36 : 0.31) * W, b: 0.5 * (torsoBot - (chin - 0.25 * HH)), nTop: 2.2, nBot: 2.5, egg: 0.1, asym: 0.06,
     rot: 0, noise: 0.006, seed: seed + 7 };
   const tcx = 300 + 2 * u, tcy = torsoBot - T.b, tp = blobPts(tcx, tcy, T);
+  // a dress / long coat: one flared body from the shoulders to below the knees (legs show under the hem), like the front view
+  const dressed = !!o.dress && mode !== "swing";
+  const dTop = chin - 0.2 * HH, dBot = sole - 0.35 * HH;
+  const dp = dressed ? blobPts(tcx - 2 * u, (dTop + dBot) / 2, { a: 0.36 * W, b: 0.5 * (dBot - dTop), nTop: 2.0, nBot: 3.0, egg: 0.35, asym: 0.04, rot: 0, noise: 0.006, seed: seed + 9 }) : tp;
   const armCol = mix(o.jacket, INK, 0.5), farArm = mix(o.jacket, INK, 0.68);
   const S: P2 = [tcx + 0.05 * T.a, chin + 0.14 * HH], aLen = 0.95 * HH;
   const swingArm = (ang: number): [P2, P2, P2] => {
@@ -859,6 +863,13 @@ export const bodySide = (p: Pen, o: Outfit, opts: SideOpts) => {
   } else if (rifle) { near = [S, [S[0] - 4 * u, S[1] + 0.42 * HH], B0]; far = mode === "march" ? swingArm(rad(30) * nearFwd) : swingArm(0); }
   else { near = swingArm(rad(-30) * nearFwd); far = mode === "march" ? swingArm(rad(30) * nearFwd) : null; }
   if (far) { p.stroke(curve(far[0], far[1], far[2]), 5.2 * u, farArm); p.dot(far[2][0], far[2][1], 5.5 * u); }
+  if (dressed) {
+    p.gradFill(dp, o.dress!, mul(o.dress!, SH_CLOTH), light);
+    p.inkRing(dp, ow, thick);
+    const sp = blobPts(tcx, chin + 0.12 * HH, { a: 0.3 * W, b: 0.3 * HH, nTop: 2.2, nBot: 2.4, egg: 0.1, asym: 0.04, rot: 0, noise: 0.006, seed: seed + 8 });
+    p.gradFill(sp, o.jacket, mul(o.jacket, SH_CLOTH), light);
+    p.inkRing(sp, ow * 0.9, thick);
+  } else {
   p.gradFill(tp, o.jacket, mul(o.jacket, SH_CLOTH), light);
   p.clip(tp, () => {
     if (o.belt) p.band([[tcx - 0.65 * T.a, chin - 0.05 * HH], [tcx + 0.75 * T.a, torsoBot - 0.1 * HH]], o.belt!, 5.5 * u, 1.8 * u);
@@ -866,6 +877,7 @@ export const bodySide = (p: Pen, o: Outfit, opts: SideOpts) => {
     if (!o.dress) for (let i = 0; i < 3; i++) { const y = chin + 0.16 * HH + i * 0.24 * HH; p.dot(tcx + 0.8 * T.a, y, 3 * u, INK); p.dot(tcx + 0.8 * T.a, y, 2.2 * u, o.buttons ?? shade(o.jacket, 0.7)); }
   });
   p.inkRing(tp, ow, thick);
+  }
   if (rifle) {
     p.band([B0, B1], "#7a4b2a", 5 * u, 1.5 * u, "round");
     p.band([lerp2(B0, B1, 0.6), B1], "#8d949c", 2.4 * u, 1.2 * u, "round");

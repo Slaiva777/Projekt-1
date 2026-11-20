@@ -3,7 +3,7 @@ import { Pen, Outfit, Expr, fxStars, fxBurst, SKIN } from "../../engine/toon";
 import { Stage, CamInfo, walker, Who, Pose, hh, q, FPS, sparkle, fxAnim, V3 } from "../../engine/core";
 import { Life } from "../../engine/world";
 import { crowdWho } from "../../engine/people";
-import { WARD, OR, LAB, TABLE, BOARD, BENCH, bikeX } from "./story";
+import { WARD, OR, LAB, TABLE, BOARD, BENCH, bikeX, brenda7 } from "./story";
 
 const HENRY_O: Outfit = { jacket: "#6a6f7a", pants: "#4a4552", boots: "#3b2a20", hat: "hair", hair: "#3a2a20", glasses: true, skin: SKIN };
 const HENRY: Who = { i: 1, o: HENRY_O, okey: "henry" };
@@ -99,7 +99,7 @@ export const stage = (id: number, t: number, f: number, cam: CamInfo, out: Stage
   if (id === 7) {
     const k = f < 865 ? 0 : f < 899 ? 1 : f < 929 ? 2 : 3;
     henryAtTable({ expr: "smile", look: 1 }, henryDay(k));
-    if (f < 865) { const u = Math.min(1, (f - 760) / 90), x = LAB[0] - 4.0 + (TABLE[0] + 0.95 - (LAB[0] - 4.0)) * u, z = LAB[2] + 1.9 + (TABLE[2] + 0.45 - (LAB[2] + 1.9)) * u;
+    if (f < 865) { const { u, x, z } = brenda7(f);
       walker(out, cam, t, BRENDA, x, z, 1, -0.4, u < 1 ? 1.2 : 0, { expr: "smile", wave: at(f, 829) ? q(Math.sin(t * 7), 12) : undefined }); }
     else { W(BRENDA, TABLE[0] + 0.95, TABLE[2] + 0.45, { expr: k === 3 ? "smile_closed" : "smile", prop: "point", look: -1 }); cal([1, 2, 3, 4][k], [865, 899, 929, 929][k] - 2, TABLE[0] - 1.3, 2.0, TABLE[2] - 1.2, 0.6); }
   }

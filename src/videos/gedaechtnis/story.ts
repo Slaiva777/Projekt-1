@@ -42,7 +42,12 @@ const S4b = (n: number) => dolly(O(0.3, 1.9, 2.4), O(0, 1.9, 0.4), pushK(n, 428,
 const S5a = (n: number) => dolly(W(0.8, 1.35, 3.0), W(0, 1.1, -1.0), pushK(n, 473, 0.0025), { fov: 42, roll: 0.03 });
 const S6a = (n: number) => dolly(L(1.0, 1.5, 3.4), L(0, 1.15, -0.8), pushK(n, 548, 0.002), { fov: 44 });
 const S6b = (n: number) => dolly(L(0.2, 1.35, 1.9), L(0, 1.25, -0.8), pushK(n, 657, 0.0022), { fov: 40 });
-const S7a = (n: number) => dolly(L(-1.2, 1.6, 3.8), L(-2.6, 1.3, -0.6), pushK(n, 756, 0.002), { fov: 46 });
+/** Brenda's walk from the lab door to the table in shot 7 */
+export const brenda7 = (f: number) => { const u = Math.max(0, Math.min(1, (f - 760) / 90));
+  return { u, x: LAB[0] - 4.0 + (TABLE[0] + 0.95 - (LAB[0] - 4.0)) * u, z: LAB[2] + 1.9 + (TABLE[2] + 0.45 - (LAB[2] + 1.9)) * u }; };
+/** pans with Brenda from the door and settles on her and Henry at the table */
+const S7a = (n: number) => { const b = brenda7(n), v = Math.max(0, (b.u - 0.5) / 0.5), w = v * v * (3 - 2 * v), ex = TABLE[0] + 0.45, ez = TABLE[2] - 0.2;
+  return { pos: L(1.6 - 0.4 * w, 1.6, 3.9 - 0.4 * w), look: [b.x + (ex - b.x) * w, 1.3, b.z + (ez - b.z) * w] as V3, fov: 46 }; };
 const S7b = (n: number) => dolly(L(1.3, 1.55, 2.8), L(0.7, 1.35, -0.4), pushK(n, 865, 0.003), { fov: 42, roll: 0.04 });
 const S7c = (n: number) => dolly(L(-0.4, 1.55, 2.9), L(0.6, 1.35, -0.4), pushK(n, 899, 0.003), { fov: 42, roll: -0.04 });
 const S7d = (n: number) => dolly(L(1.0, 1.5, 2.4), L(0.6, 1.35, -0.4), pushK(n, 929, 0.003), { fov: 40, roll: 0.03 });
