@@ -89,7 +89,7 @@ export const stage = (id: number, t: number, f: number, cam: CamInfo, out: Stage
       sparkle(out, t, 1517, PARIS[0], 1.62, PARIS[2] + 0.6, 1.2);
     }
   }
-  if (id === 10 && f >= 1645) { hammerers(6, sx - 14, sz + 2.8, 5); for (let k = 0; k < 3; k++) W(crowdWho("1880", k + 30), sx - 13 + k * 1.2, sz + 7 + (k % 2), { expr: "smile", headTilt: -10, prop: k === 0 ? "point" : null }); }
+  if (id === 10 && f >= 1645) { hammerers(6, sx - 14, sz + 2.8, 5); for (let k = 0; k < 3; k++) W(crowdWho("1880", k + 30), sx - 6.5 + k * 1.3, sz + 4.2 + (k % 2) * 0.6, { expr: "smile", headTilt: -10, prop: k === 0 ? "point" : null }); }
   if (id === 11 && f >= 1830 && f < 1915) for (let k = 0; k < 18; k++) {
     const x = SQUARE[0] - 2 + (k % 6) * 1.6 + hh(k, 7) * 0.5, z = SQUARE[2] - 2 + Math.floor(k / 6) * 1.6;
     W(crowdWho("1880", k + 40), x, z, { expr: (["laugh", "grin", "smile"] as Expr[])[k % 3], wave: k % 3 === 0 ? q(Math.sin(t * 7 + k), 12) : undefined, headTilt: -6 });
@@ -102,7 +102,7 @@ export const stage = (id: number, t: number, f: number, cam: CamInfo, out: Stage
 export const life = (id: number): Life => {
   const era = id <= 4 ? "medieval" : id <= 9 ? "1850" : "1880";
   const square: Life = {
-    walk: [{ x0: -88, x1: -40, z0: 14, z1: 22, axis: "x", n: 8, era, base: 100 }, { x0: -86, x1: -44, z0: -22, z1: -14, axis: "x", n: 6, era, base: 120 }, { x0: -90, x1: -40, z0: -6, z1: 6, axis: "x", n: 4, era, base: 130 }],
+    walk: [{ x0: -88, x1: -40, z0: 24, z1: 30, axis: "x", n: 8, era, base: 100 }, { x0: -86, x1: -44, z0: -22, z1: -14, axis: "x", n: 6, era, base: 120 }, { x0: -90, x1: -40, z0: -6, z1: 6, axis: "x", n: 4, era, base: 130 }],
     groups: [{ x: -66, z: 10, n: 3, era, base: 140 }, { x: -74, z: -8, n: 4, era, base: 150 }, { x: -50, z: 18, n: 2, era, base: 160 }],
     birds: 7, birdY: 22, smoke: [[-104, 12, -20], [-60, 13, 36], [-30, 12, 42]] as V3[],
   };

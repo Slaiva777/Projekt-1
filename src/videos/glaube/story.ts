@@ -43,7 +43,7 @@ const S3a = (n: number) => dolly([WORK[0] - 7, 1.8, WORK[2] + 6], [WORK[0] + 1, 
 const S3b = (n: number) => dolly([WORK[0] - 3.6, 1.5, WORK[2] + 4.2], [WORK[0] + 0.4, 1.4, WORK[2] + 0.4], pushK(n, 525, 0.0025), { fov: 42 });
 const S3c = (n: number) => dolly([WORK[0] - 3.2, 1.5, WORK[2] + 4.6], [WORK[0] + 0.4, 1.3, WORK[2] + 0.4], pushK(n, 586, 0.0025), { fov: 42, roll: 0.03 });
 const S4a = (n: number) => dolly([WORK[0] - 5, 1.6, WORK[2] + 5], [WORK[0] + 0.5, 1.5, WORK[2] + 0.5], pushK(n, 641, 0.002), { fov: 44 });
-const S4b = (n: number) => dolly([SOUTH[0] - 26, 3.5, SOUTH[2] + 26], [SOUTH[0], 12, SOUTH[2]], pushK(n, 720, 0.0015), { fov: 48 });
+const S4b = (n: number) => dolly([SOUTH[0] - 50, 4, SOUTH[2] + 48], [SOUTH[0], 20, SOUTH[2]], pushK(n, 720, 0.0015), { fov: 48 });
 const S5a = (n: number) => dolly([SOUTH[0] - 22, 1.6, SOUTH[2] + 14], [SOUTH[0], 24, SOUTH[2]], pushK(n, 821, 0.0018), { fov: 52 });
 const S5b = (n: number) => dolly([SOUTH[0] - 9, STUMP_H + 6, SOUTH[2] + 12], [SOUTH[0], STUMP_H + 4, SOUTH[2]], pushK(n, 880, 0.002, 0.005, 26), { fov: 44 });
 const S6a = (n: number) => dolly([SOUTH[0] - 30, 12, SOUTH[2] + 30], [SOUTH[0], STUMP_H, SOUTH[2]], pushK(n, 966, 0.0012), { fov: 44 });
@@ -59,7 +59,7 @@ const S11a = (n: number) => zoom([-150, 45, 70], [TOWER_X, 34, 0], 44, pushK(n, 
 const S11b = (n: number) => dolly([SQUARE[0] - 8, 1.7, SQUARE[2] + 6], [SQUARE[0] + 2, 2.2, SQUARE[2] + 1], pushK(n, 1830, 0.002), { fov: 46 });
 const S11c = (n: number) => dolly([TOWER_X - 48, 1.2, 12], [TOWER_X, 52, 0], pushK(n, 1915, 0.0015, 0.004, 26), { fov: 58, roll: -0.04 });
 const S12a = (n: number) => dolly([SQUARE[0] + 6, 1.4, SQUARE[2] + 9], [SQUARE[0] + 9, 1.3, SQUARE[2] + 7.2], pushK(n, 2019, 0.0022), { fov: 42 });
-const S12b = crane(S12a, 2110, 110, [SQUARE[0], 14, SQUARE[2] + 18], [SQUARE[0] - 30, 40, SQUARE[2] + 40], [TOWER_X, 40, 0], 50);
+const S12b = crane(S12a, 2110, 110, [SQUARE[0] - 20, 12, SQUARE[2] + 40], [SQUARE[0] - 80, 45, SQUARE[2] + 90], [TOWER_X, 38, 0], 50);
 
 const CAMS: Record<number, Key[]> = {
   1: [{ f: 0, s: S1a }, { f: 88, cut: true, s: S1b }, { f: 166, cut: true, s: S1c }],
