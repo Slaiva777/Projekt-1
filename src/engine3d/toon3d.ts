@@ -3,12 +3,23 @@
 // pose() as a pure function of time, so any frame renders identically in any chunk.
 import * as THREE from "three";
 
-export type Expr = "smile" | "grin" | "neutral" | "smug" | "worried" | "shock" | "sad" | "talk";
+export type Expr = "smile" | "grin" | "neutral" | "smug" | "worried" | "shock" | "sad" | "talk" | "stare";
 export type Look = {
   skin?: string; coat: string; coatLong?: boolean; pants?: string; shoes?: string; glove?: string;
   hat?: "fedora" | "cap" | "straw" | "bowler" | "helmet" | "top" | "none"; hatCol?: string; band?: string;
   hair?: string; hairStyle?: "short" | "bun" | "long" | "bald"; beard?: string; moustache?: string; glasses?: boolean;
   scale?: number; girth?: number; buttons?: string; collar?: string; kid?: boolean; dress?: boolean;
+  /** suit: white shirt V + tie colour */ tie?: string; scar?: boolean; stubble?: string; label?: string; vest?: string;
+};
+const labelTex = new Map<string, THREE.CanvasTexture>();
+export const textTex = (text: string, fg = "#ffffff", bg = "rgba(0,0,0,0)", w = 512, h = 128, font = "bold 84px Inter") => {
+  const k = text + fg + bg + w + h + font; let t = labelTex.get(k);
+  if (!t) {
+    const c = document.createElement("canvas"); c.width = w; c.height = h; const g = c.getContext("2d")!;
+    g.fillStyle = bg; g.fillRect(0, 0, w, h); g.fillStyle = fg; g.font = font; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(text, w / 2, h / 2 + 4);
+    t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; labelTex.set(k, t);
+  }
+  return t;
 };
 export type Pose = {
   expr?: Expr; walk?: number; /** metres travelled (drives gait) */ yaw?: number; headYaw?: number; headTilt?: number;
@@ -88,6 +99,20 @@ export class Person {
       const c = mat(L.collar, 0.8);
       for (const side of [-1, 1]) { const m = mesh(G.sph, c, [0.09, 0.05, 0.03], [side * 0.08, neckY - 0.06, torsoR * 0.66]); m.rotation.z = side * 0.5; this.body.add(m); }
     }
+    if (L.tie) {
+      const front = (y: number) => { const yy = (y - chestY) / (torsoH / 2); return torsoR * 0.9 * Math.sqrt(Math.max(0, 1 - yy * yy)) * (1 - 0.16 * yy); };
+      const shirt = new THREE.Mesh(new THREE.ConeGeometry(0.075, 0.24, 3), mat("#f2f0ea", 0.7)); shirt.rotation.set(Math.PI, 0, 0); shirt.position.set(0, neckY - 0.1, front(neckY - 0.1) - 0.012); shirt.scale.z = 0.25; this.body.add(shirt);
+      const tie = mesh(G.sph, mat(L.tie, 0.5), [0.022, 0.1, 0.01], [0, neckY - 0.13, front(neckY - 0.13) + 0.004]); this.body.add(tie);
+    }
+    if (L.vest) {
+      const v = mesh(eggGeo, mat(L.vest, 0.7), [torsoR * 1.07, torsoH * 0.32, torsoR * 0.98], [0, chestY + 0.05, 0]); this.body.add(v);
+    }
+    if (L.label) {
+      for (const [z, ry] of [[-1, Math.PI], [1, 0]] as const) {
+        const pl = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 0.075), new THREE.MeshStandardMaterial({ map: textTex(L.label), transparent: true, roughness: 0.6 }));
+        pl.position.set(0, chestY + 0.08, z * torsoR * (L.vest ? 1.0 : 0.92) + z * 0.02); pl.rotation.y = ry; this.body.add(pl);
+      }
+    }
     // arms: shoulder pivot, thin sleeve + mitten
     for (const [arm, side] of [[this.armL, -1], [this.armR, 1]] as const) {
       arm.position.set(side * torsoR * 0.92, chestY + 0.12, 0);
@@ -136,6 +161,10 @@ export class Person {
     }
     if (L.beard) { const bd = mesh(G.sph, mat(L.beard, 0.9), [0.17, 0.1, 0.07]); place(bd, 0, -0.68, -0.05); this.head.add(bd); }
     if (L.moustache) { const mo = place(mesh(G.sph, mat(L.moustache, 0.85), [0.075, 0.025, 0.025]), 0, -0.17, 0.004); this.head.add(mo); }
+    if (L.scar) {
+      const sc = new THREE.Mesh(new THREE.TorusGeometry(0.045, 0.009, 6, 16, Math.PI * 0.9), mat("#3e1e1a", 0.6)); place(sc, -0.3, -0.06, 0.003); sc.rotateZ(Math.PI * 1.05); sc.castShadow = false; this.head.add(sc);
+    }
+    if (L.stubble) { const sb = mesh(G.sph, mat(L.stubble, 1, { transparent: true, opacity: 0.32 }), [headR * 0.7, headR * 0.36, headR * 0.6]); sb.position.set(0, -headR * 0.52, headR * 0.4); sb.castShadow = false; this.head.add(sb); }
     if (L.glasses) {
       const gm = mat("#1d1b1f", 0.3);
       for (const side of [-1, 1]) {
@@ -184,11 +213,12 @@ export class Person {
     const e = p.expr ?? "smile";
     const blinkT = (t + hash(sd) * 4) % 3.7, blink = blinkT < 0.12 ? 0.15 : 1;
     let eyeY = 1, browRot = 0, browUp = 0;
-    let mouth: string = { smile: "smile", grin: "grin", neutral: "neutral", smug: "smile", worried: "neutral", shock: "o", sad: "sad", talk: "grin" }[e];
+    let mouth: string = { smile: "smile", grin: "grin", neutral: "neutral", smug: "smile", worried: "neutral", shock: "o", sad: "sad", talk: "grin", stare: "neutral" }[e];
     if (e === "smug") { eyeY = 0.45; browRot = 0.25; }
     if (e === "worried" || e === "sad") { browRot = -0.35; browUp = 0.012; }
     if (e === "shock") { eyeY = 1.3; browUp = 0.02; }
     if (e === "grin") eyeY = 0.85;
+    if (e === "stare") { eyeY = 0.72; browRot = 0.38; browUp = -0.006; }
     if (p.talk) mouth = Math.floor(t * 7.5 + sd) % 3 === 0 ? "neutral" : Math.floor(t * 7.5 + sd) % 3 === 1 ? "o" : mouth === "sad" ? "sad" : "grin";
     for (const k in this.mouths) this.mouths[k].visible = k === mouth;
     for (const ey of this.eyes) { ey.scale.y = 0.038 * eyeY * blink; (ey.userData.hl as THREE.Object3D).visible = blink > 0.5 && eyeY > 0.6; }
