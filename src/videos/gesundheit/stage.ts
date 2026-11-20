@@ -2,7 +2,7 @@
 import { Pen, Outfit, Expr, fxBurst } from "../../engine/toon";
 import { Stage, CamInfo, walker, Who, Pose, hh, q, sparkle, fxAnim } from "../../engine/core";
 import { Life } from "../../engine/world";
-import { WARD_DOC, WARD_MID, DISSECT, OFFICE, SCILAB, BATH, BASIN, GATE, STREET_Z } from "./story";
+import { WARD_DOC, WARD_MID, DISSECT, OFFICE, SCILAB, BATH, BASIN, GATE, STREET_Z, docWalkX, docWalkZ } from "./story";
 
 const SEMMEL: Who = { i: 1, o: { jacket: "#2e2a36", pants: "#3b3f52", boots: "#241726", hat: "bald", hair: "#5a3b2a", moustache: "#5a3b2a", skin: "#f7d7bd", build: "stout" }, okey: "semmel" };
 const KOLL: Who = { i: 2, o: { jacket: "#3a3a44", pants: "#3b3f52", boots: "#241726", hat: "bald", hair: "#9a948c", beard: "#8a8580", glasses: true }, okey: "koll" };
@@ -79,7 +79,8 @@ export const stage = (id: number, t: number, f: number, cam: CamInfo, out: Stage
     }
   }
   if (id === 5) {
-    if (f < 949) { walker(out, cam, t, SEMMEL, OFFICE[0] - 1 + 1.0 * Math.sin(t * 0.9), OFFICE[2] - 0.2, Math.cos(t * 0.9) > 0 ? 1 : -1, 0, Math.abs(Math.cos(t * 0.9)) > 0.2 ? 0.9 : 0, { expr: "nervous" }); card("qmark", qmark, OFFICE[0] - 0.6, 2.2, OFFICE[2] - 0.2, 0.3, 0.33, 200, 220); }
+    if (f < 949) { const sx = OFFICE[0] - 0.15 + 0.3 * Math.sin(t * 0.9);
+      walker(out, cam, t, SEMMEL, sx, OFFICE[2] - 0.2, Math.cos(t * 0.9) > 0 ? 1 : -1, 0, Math.abs(Math.cos(t * 0.9)) > 0.2 ? 0.5 : 0, { expr: "nervous" }); card("qmark", qmark, sx + 0.3, 2.2, OFFICE[2] - 0.2, 0.3, 0.33, 200, 220); }
     else if (f < 1071) {
       W(KOLL, DISSECT[0] + 0.6, DISSECT[2] + 0.4, { expr: at(f, 1015) ? "shock" : "smile", prop: at(f, 1010) ? "point" : null });
       for (let k = 0; k < 3; k++) W(doc(k + 8), DISSECT[0] - 1.6 - k * 0.8, DISSECT[2] - 0.6 + k * 0.6, { expr: "neutral", look: 1 });
@@ -93,7 +94,7 @@ export const stage = (id: number, t: number, f: number, cam: CamInfo, out: Stage
   if (id === 6) {
     if (f < 1189) { W(SEMMEL, OFFICE[0], OFFICE[2] - 0.4, { expr: at(f, 1170) ? "shock" : "nervous" }); fxAnim(out, t, "idea", 1168, 12, (p, u) => fxBurst(p, u, "#fff3b0"), OFFICE[0], 2.2, OFFICE[2] - 0.3, 1.0, 1.0); }
     else for (let k = 0; k < 5; k++) {
-      const x = -15 - ((t - 39.6) * 1.2 + k * 1.3) % 30, z = 7.6 + (k % 2) * 0.8;
+      const x = docWalkX(k, t), z = docWalkZ(k);
       walker(out, cam, t, doc(k), x, z, -1, 0, 1.2, { expr: "neutral" });
       for (let g = 0; g < 3; g++) card(`germ${(k + g) % 4}${q(t % 1, 4)}`, germ(k + g, q(t * 2, 4)), x + 0.25 + (g - 1) * 0.12, 1.0 + 0.08 * g, z + 0.2, 0.13, 0.13, 200, 200);
     }

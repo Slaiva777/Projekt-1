@@ -38,13 +38,18 @@ const S3b = (n: number) => dolly(R(WARD_DOC, -1.0, 1.6, 3.4), R(WARD_DOC, 0.6, 1
 const S3c = (n: number) => dolly(R(WARD_DOC, -0.4, 1.7, 2.6), R(WARD_DOC, -0.4, 1.9, 0), pushK(n, 575, 0.0025, 0.006, 26), { fov: 42 });
 const S4a = (n: number) => dolly([-21, 1.6, 15.5], [-22, 1.4, 10.5], pushK(n, 671, 0.0022), { fov: 44 });
 const S4b = (n: number) => dolly([4.5, 1.6, STREET_Z + 6.5], [2, 1.0, STREET_Z + 0.6], pushK(n, 729, 0.002), { fov: 46, roll: 0.03 });
-const S5a = (n: number) => dolly(R(OFFICE, 1.0, 1.6, 2.6), R(OFFICE, 0, 1.4, -0.6), pushK(n, 861, 0.0022), { fov: 42 });
+const S5a = (n: number) => dolly(R(OFFICE, 0.6, 1.6, 3.0), R(OFFICE, 0, 1.4, -0.6), pushK(n, 861, 0.0022), { fov: 42 });
 const S5b = (n: number) => dolly(R(DISSECT, 1.4, 1.6, 3.0), R(DISSECT, 0.3, 1.3, -0.4), pushK(n, 949, 0.0022, 0.005, 26), { fov: 44 });
-const S5c = (n: number) => dolly(R(DISSECT, -1.6, 1.8, 3.2), R(DISSECT, 0, 1.0, -0.8), pushK(n, 1032, 0.002), { fov: 46, roll: -0.03 });
+const S5c = (n: number) => dolly(R(DISSECT, 1.8, 1.7, 3.4), R(DISSECT, -0.2, 1.1, 0), pushK(n, 1032, 0.002), { fov: 54, roll: -0.03 });
 const S5d = (n: number) => dolly(R(WARD_DOC, -3.8, 1.5, 1.6), R(WARD_DOC, -4.6, 1.2, -1.6), pushK(n, 1071, 0.0022), { fov: 42 });
 const S6a = (n: number) => dolly(R(OFFICE, 0.4, 1.6, 2.2), R(OFFICE, 0, 1.6, -0.4), pushK(n, 1141, 0.003, 0.007, 26), { fov: 40, roll: 0.04 });
 const S6b = (n: number) => dolly([-16, 1.7, 15], [-20, 1.4, 8], pushK(n, 1189, 0.002), { fov: 46 });
-const S6c = (n: number) => dolly([-23.6, 1.5, 9.6], [-24.4, 1.3, 7.4], pushK(n, 1273, 0.0025, 0.006, 26), { fov: 40 });
+/** the doctors walking from the dissection room to the wards (shot 6): x of doctor k at time t, z lane */
+export const docWalkX = (k: number, t: number) => -15 - (((t - 39.6) * 1.2 + k * 1.3) % 30);
+export const docWalkZ = (k: number) => 7.6 + (k % 2) * 0.8;
+/** tracks doctor 1 from the side, framing the germs on his hands */
+const S6c = (n: number) => { const x = docWalkX(1, n / 30), z = docWalkZ(1);
+  return { pos: [x - 0.2, 1.45, z + 2.6] as V3, look: [x + 0.2, 1.05, z] as V3, fov: 42 }; };
 const S7a = (n: number) => dolly(R(BASIN, -2.6, 1.7, 4.6), R(BASIN, -1.0, 1.4, 0.4), pushK(n, 1346, 0.0022), { fov: 46 });
 const S7b = (n: number) => dolly(R(BASIN, -0.6, 1.5, 2.2), R(BASIN, 0, 1.1, 0.1), pushK(n, 1430, 0.0025, 0.006, 26), { fov: 40, roll: -0.03 });
 const S8a = (n: number) => dolly(R(WARD_DOC, 0.5, 1.8, 3.2), R(WARD_DOC, 0.5, 2.0, 0.6), pushK(n, 1511, 0.0022), { fov: 44 });
