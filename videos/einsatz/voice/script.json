@@ -1,0 +1,16 @@
+[
+ {"id": "n1", "voice": "de_DE-thorsten-high", "speed": 1.03, "text": "Mitternacht. Die Stadt schläft, fast. | Nur über den Dächern kreist ein Hubschrauber, und sein Licht tastet die Straße ab."},
+ {"id": "n2", "voice": "de_DE-thorsten-high", "speed": 1.02, "text": "Unten biegen zwei Männer um die Ecke. Ghost, und Tommy. Sie kennen sich seit der Kindheit. | Für sie ist das keine Freundschaft. Das sind Brüder."},
+ {"id": "r1", "voice": "de_DE-karlsson-low", "speed": 0.95, "text": "Adler eins an Zentrale. Zwei Personen, Hauptstraße, Höhe Kiosk."},
+ {"id": "n3", "voice": "de_DE-thorsten-high", "speed": 1.02, "text": "Ghost trägt, wie immer, Anzug. Er plant jeden Schritt im Voraus. | Und was er wirklich denkt, das sieht man ihm nie an."},
+ {"id": "n4", "voice": "de_DE-thorsten-high", "speed": 1.0, "text": "Tommy ist das Gegenteil. Laut. Schnell. | Und immer der Erste, der zuschlägt."},
+ {"id": "r2", "voice": "de_DE-kerstin-low", "speed": 0.95, "text": "Zentrale an alle Einheiten. Zugriff vorbereiten."},
+ {"id": "n5", "voice": "de_DE-thorsten-high", "speed": 1.02, "text": "Heute Nacht warten sie auf einen Kontakt. Eine Minute. Dann zwei. Doch niemand kommt. | Stattdessen gehen überall die Blaulichter an."},
+ {"id": "n6", "voice": "de_DE-thorsten-high", "speed": 1.02, "text": "Ghost bleibt ruhig. Er hebt nur die Hand, ganz langsam. | Tommy beugt sich vor, und lässt ihn nicht mehr aus den Augen."},
+ {"id": "r3", "voice": "de_DE-kerstin-low", "speed": 0.95, "text": "Zugriff, frei."},
+ {"id": "n7", "voice": "de_DE-thorsten-high", "speed": 1.0, "text": "Dann geht die Schiebetür auf. Die Spezialeinheit steigt aus. | Und Tommy fährt herum."},
+ {"id": "n8", "voice": "de_DE-thorsten-high", "speed": 1.02, "text": "Von oben sieht die Wärmebildkamera alles. | Zwei Männer. Kein Ausweg."},
+ {"id": "r4", "voice": "de_DE-karlsson-low", "speed": 0.95, "text": "Ziele erfasst."},
+ {"id": "n9", "voice": "de_DE-thorsten_emotional-medium", "speaker": 7, "speed": 1.1, "text": "Nur eine Frage bleibt. | Wer hat sie verraten?"},
+ {"id": "n10", "voice": "de_DE-thorsten-high", "speed": 1.05, "text": "Fortsetzung folgt."}
+]

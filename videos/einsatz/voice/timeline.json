@@ -1,974 +1,1152 @@
 {
- "total": 2150,
+ "total": 2443,
  "shots": [
   {
    "name": "heli",
    "a": 0,
-   "b": 178
+   "b": 241
   },
   {
    "name": "walk",
-   "a": 178,
-   "b": 416
+   "a": 241,
+   "b": 535
   },
   {
    "name": "look",
-   "a": 416,
-   "b": 551
+   "a": 535,
+   "b": 708
   },
   {
    "name": "ghost",
-   "a": 551,
-   "b": 737
+   "a": 708,
+   "b": 943
   },
   {
    "name": "tommy",
-   "a": 737,
-   "b": 934
+   "a": 943,
+   "b": 1139
   },
   {
    "name": "wait",
-   "a": 934,
-   "b": 1167
+   "a": 1139,
+   "b": 1456
   },
   {
    "name": "arrive",
-   "a": 1167,
-   "b": 1261
+   "a": 1456,
+   "b": 1532
   },
   {
    "name": "dialog",
-   "a": 1261,
-   "b": 1461
+   "a": 1532,
+   "b": 1767
   },
   {
    "name": "move",
-   "a": 1461,
-   "b": 1672
+   "a": 1767,
+   "b": 1971
   },
   {
    "name": "thermal",
-   "a": 1672,
-   "b": 1888
+   "a": 1971,
+   "b": 2175
   },
   {
    "name": "final",
-   "a": 1888,
-   "b": 2150
+   "a": 2175,
+   "b": 2443
   }
  ],
  "words": [
   {
    "w": "Mitternacht",
-   "s": 0.5,
-   "e": 1.127,
-   "radio": false
-  },
-  {
-   "w": "in",
-   "s": 1.15,
-   "e": 1.254,
-   "radio": false
-  },
-  {
-   "w": "der",
-   "s": 1.277,
-   "e": 1.382,
-   "radio": false
-  },
-  {
-   "w": "Stadt",
-   "s": 1.405,
-   "e": 1.672,
-   "radio": false
-  },
-  {
-   "w": "Über",
-   "s": 2.322,
-   "e": 2.542,
-   "radio": false
-  },
-  {
-   "w": "den",
-   "s": 2.566,
-   "e": 2.705,
-   "radio": false
-  },
-  {
-   "w": "Dächern",
-   "s": 2.751,
-   "e": 3.111,
-   "radio": false
-  },
-  {
-   "w": "kreist",
-   "s": 3.193,
-   "e": 3.518,
-   "radio": false
-  },
-  {
-   "w": "ein",
-   "s": 3.576,
-   "e": 3.75,
-   "radio": false
-  },
-  {
-   "w": "Hubschrauber",
-   "s": 3.854,
-   "e": 4.423,
-   "radio": false
-  },
-  {
-   "w": "der",
-   "s": 4.458,
-   "e": 4.551,
-   "radio": false
-  },
-  {
-   "w": "Bundespolizei",
-   "s": 4.586,
-   "e": 5.468,
-   "radio": false
-  },
-  {
-   "w": "Unten",
-   "s": 6.268,
-   "e": 6.675,
-   "radio": false
-  },
-  {
-   "w": "kommen",
-   "s": 6.756,
-   "e": 7.023,
-   "radio": false
-  },
-  {
-   "w": "zwei",
-   "s": 7.116,
-   "e": 7.452,
-   "radio": false
-  },
-  {
-   "w": "Männer",
-   "s": 7.487,
-   "e": 7.812,
-   "radio": false
-  },
-  {
-   "w": "die",
-   "s": 7.882,
-   "e": 8.033,
-   "radio": false
-  },
-  {
-   "w": "Straße",
-   "s": 8.056,
-   "e": 8.486,
-   "radio": false
-  },
-  {
-   "w": "entlang",
-   "s": 8.544,
-   "e": 8.962,
-   "radio": false
-  },
-  {
-   "w": "Ghost",
-   "s": 9.565,
-   "e": 10.018,
-   "radio": false
-  },
-  {
-   "w": "und",
-   "s": 10.134,
-   "e": 10.273,
-   "radio": false
-  },
-  {
-   "w": "Tommy",
-   "s": 10.343,
-   "e": 10.807,
-   "radio": false
-  },
-  {
-   "w": "Seit",
-   "s": 11.41,
-   "e": 11.619,
-   "radio": false
-  },
-  {
-   "w": "ihrer",
-   "s": 11.689,
-   "e": 11.91,
-   "radio": false
-  },
-  {
-   "w": "Kindheit",
-   "s": 11.956,
-   "e": 12.42,
-   "radio": false
-  },
-  {
-   "w": "sind",
-   "s": 12.478,
-   "e": 12.629,
-   "radio": false
-  },
-  {
-   "w": "sie",
-   "s": 12.676,
-   "e": 12.78,
-   "radio": false
-  },
-  {
-   "w": "wie",
-   "s": 12.803,
-   "e": 12.943,
-   "radio": false
-  },
-  {
-   "w": "Brüder",
-   "s": 12.978,
-   "e": 13.43,
-   "radio": false
-  },
-  {
-   "w": "Adler",
-   "s": 14.18,
-   "e": 14.505,
-   "radio": true
-  },
-  {
-   "w": "eins",
-   "s": 14.575,
-   "e": 14.854,
-   "radio": true
-  },
-  {
-   "w": "an",
-   "s": 14.888,
-   "e": 15.005,
-   "radio": true
-  },
-  {
-   "w": "Zentrale",
-   "s": 15.063,
-   "e": 15.655,
-   "radio": true
-  },
-  {
-   "w": "Zwei",
-   "s": 16.177,
-   "e": 16.583,
-   "radio": true
-  },
-  {
-   "w": "Personen",
-   "s": 16.641,
-   "e": 17.129,
-   "radio": true
-  },
-  {
-   "w": "auf",
-   "s": 17.163,
-   "e": 17.314,
-   "radio": true
-  },
-  {
-   "w": "der",
-   "s": 17.361,
-   "e": 17.477,
-   "radio": true
-  },
-  {
-   "w": "Straße",
-   "s": 17.5,
-   "e": 17.906,
-   "radio": true
-  },
-  {
-   "w": "Ghost",
-   "s": 18.706,
-   "e": 19.066,
-   "radio": false
-  },
-  {
-   "w": "trägt",
-   "s": 19.089,
-   "e": 19.391,
-   "radio": false
-  },
-  {
-   "w": "immer",
-   "s": 19.449,
-   "e": 19.669,
-   "radio": false
-  },
-  {
-   "w": "Anzug",
-   "s": 19.727,
-   "e": 20.261,
-   "radio": false
-  },
-  {
-   "w": "Er",
-   "s": 20.795,
-   "e": 20.969,
-   "radio": false
-  },
-  {
-   "w": "plant",
-   "s": 21.027,
-   "e": 21.364,
-   "radio": false
-  },
-  {
-   "w": "jeden",
-   "s": 21.422,
-   "e": 21.642,
-   "radio": false
-  },
-  {
-   "w": "Schritt",
-   "s": 21.689,
-   "e": 22.072,
-   "radio": false
-  },
-  {
-   "w": "und",
-   "s": 22.339,
-   "e": 22.641,
-   "radio": false
-  },
-  {
-   "w": "er",
-   "s": 22.676,
-   "e": 22.757,
-   "radio": false
-  },
-  {
-   "w": "zeigt",
-   "s": 22.792,
-   "e": 23.059,
-   "radio": false
-  },
-  {
-   "w": "nie",
-   "s": 23.175,
-   "e": 23.384,
-   "radio": false
-  },
-  {
-   "w": "was",
-   "s": 23.488,
-   "e": 23.651,
-   "radio": false
-  },
-  {
-   "w": "er",
-   "s": 23.674,
-   "e": 23.767,
-   "radio": false
-  },
-  {
-   "w": "denkt",
-   "s": 23.802,
-   "e": 24.115,
-   "radio": false
-  },
-  {
-   "w": "Tommy",
-   "s": 24.915,
-   "e": 25.472,
-   "radio": false
-  },
-  {
-   "w": "ist",
-   "s": 25.588,
-   "e": 25.704,
-   "radio": false
-  },
-  {
-   "w": "das",
-   "s": 25.751,
-   "e": 25.902,
-   "radio": false
-  },
-  {
-   "w": "Gegenteil",
-   "s": 25.948,
-   "e": 26.54,
-   "radio": false
-  },
-  {
-   "w": "Laut",
-   "s": 27.132,
-   "e": 27.654,
-   "radio": false
-  },
-  {
-   "w": "schnell",
-   "s": 27.805,
-   "e": 28.107,
-   "radio": false
-  },
-  {
-   "w": "und",
-   "s": 28.211,
-   "e": 28.397,
-   "radio": false
-  },
-  {
-   "w": "immer",
-   "s": 28.432,
-   "e": 28.653,
-   "radio": false
-  },
-  {
-   "w": "bereit",
-   "s": 28.711,
-   "e": 29.129,
-   "radio": false
-  },
-  {
-   "w": "als",
-   "s": 29.326,
-   "e": 29.5,
-   "radio": false
-  },
-  {
-   "w": "Erster",
-   "s": 29.547,
-   "e": 29.86,
-   "radio": false
-  },
-  {
-   "w": "zuzuschlagen",
-   "s": 29.906,
-   "e": 30.673,
-   "radio": false
-  },
-  {
-   "w": "Zentrale",
-   "s": 31.423,
-   "e": 32.003,
-   "radio": true
-  },
-  {
-   "w": "an",
-   "s": 32.038,
-   "e": 32.212,
-   "radio": true
-  },
-  {
-   "w": "alle",
-   "s": 32.294,
-   "e": 32.537,
-   "radio": true
-  },
-  {
-   "w": "Zugriff",
-   "s": 32.99,
-   "e": 33.535,
-   "radio": true
-  },
-  {
-   "w": "vorbereiten",
-   "s": 33.57,
-   "e": 34.209,
-   "radio": true
-  },
-  {
-   "w": "Heute",
-   "s": 34.559,
-   "e": 35.058,
-   "radio": false
-  },
-  {
-   "w": "Nacht",
-   "s": 35.128,
-   "e": 35.395,
-   "radio": false
-  },
-  {
-   "w": "warten",
-   "s": 35.488,
-   "e": 35.836,
-   "radio": false
-  },
-  {
-   "w": "sie",
-   "s": 35.859,
-   "e": 35.976,
-   "radio": false
-  },
-  {
-   "w": "auf",
-   "s": 36.022,
-   "e": 36.15,
-   "radio": false
-  },
-  {
-   "w": "einen",
-   "s": 36.196,
-   "e": 36.417,
-   "radio": false
-  },
-  {
-   "w": "Kontakt",
-   "s": 36.463,
-   "e": 36.974,
-   "radio": false
-  },
-  {
-   "w": "Doch",
-   "s": 37.426,
-   "e": 37.705,
-   "radio": false
-  },
-  {
-   "w": "der",
-   "s": 37.786,
-   "e": 37.902,
-   "radio": false
-  },
-  {
-   "w": "kommt",
-   "s": 37.972,
-   "e": 38.216,
-   "radio": false
-  },
-  {
-   "w": "nicht",
-   "s": 38.274,
-   "e": 38.587,
-   "radio": false
-  },
-  {
-   "w": "Stattdessen",
-   "s": 39.051,
-   "e": 39.655,
-   "radio": false
-  },
-  {
-   "w": "gehen",
-   "s": 39.724,
-   "e": 40.061,
-   "radio": false
-  },
-  {
-   "w": "überall",
-   "s": 40.142,
-   "e": 40.618,
-   "radio": false
-  },
-  {
-   "w": "die",
-   "s": 40.665,
-   "e": 40.804,
-   "radio": false
-  },
-  {
-   "w": "Blaulichter",
-   "s": 40.827,
-   "e": 41.28,
-   "radio": false
-  },
-  {
-   "w": "an",
-   "s": 41.361,
-   "e": 41.582,
-   "radio": false
-  },
-  {
-   "w": "Ghost",
-   "s": 42.432,
-   "e": 42.815,
-   "radio": false
-  },
-  {
-   "w": "bleibt",
-   "s": 42.885,
-   "e": 43.187,
-   "radio": false
-  },
-  {
-   "w": "ruhig",
-   "s": 43.222,
-   "e": 43.57,
-   "radio": false
-  },
-  {
-   "w": "und",
-   "s": 43.605,
-   "e": 43.814,
-   "radio": false
-  },
-  {
-   "w": "hebt",
-   "s": 43.837,
-   "e": 44.093,
-   "radio": false
-  },
-  {
-   "w": "nur",
-   "s": 44.139,
-   "e": 44.232,
-   "radio": false
-  },
-  {
-   "w": "die",
-   "s": 44.267,
-   "e": 44.383,
-   "radio": false
-  },
-  {
-   "w": "Hand",
-   "s": 44.406,
-   "e": 44.719,
-   "radio": false
-  },
-  {
-   "w": "Tommy",
-   "s": 45.346,
-   "e": 45.706,
-   "radio": false
-  },
-  {
-   "w": "beugt",
-   "s": 45.741,
-   "e": 46.031,
-   "radio": false
-  },
-  {
-   "w": "sich",
-   "s": 46.066,
-   "e": 46.275,
-   "radio": false
-  },
-  {
-   "w": "vor",
-   "s": 46.309,
-   "e": 46.565,
-   "radio": false
-  },
-  {
-   "w": "und",
-   "s": 46.658,
-   "e": 46.809,
-   "radio": false
-  },
-  {
-   "w": "lässt",
-   "s": 46.844,
-   "e": 47.064,
-   "radio": false
-  },
-  {
-   "w": "ihn",
-   "s": 47.157,
-   "e": 47.32,
-   "radio": false
-  },
-  {
-   "w": "nicht",
-   "s": 47.354,
-   "e": 47.552,
-   "radio": false
-  },
-  {
-   "w": "aus",
-   "s": 47.598,
-   "e": 47.761,
-   "radio": false
-  },
-  {
-   "w": "den",
-   "s": 47.807,
-   "e": 47.958,
-   "radio": false
-  },
-  {
-   "w": "Augen",
-   "s": 47.993,
-   "e": 48.237,
-   "radio": false
-  },
-  {
-   "w": "Zugriff",
-   "s": 48.937,
-   "e": 49.436,
-   "radio": true
-  },
-  {
-   "w": "frei",
-   "s": 49.459,
-   "e": 49.831,
-   "radio": true
-  },
-  {
-   "w": "Dann",
-   "s": 50.131,
-   "e": 50.351,
-   "radio": false
-  },
-  {
-   "w": "geht",
-   "s": 50.409,
-   "e": 50.584,
-   "radio": false
-  },
-  {
-   "w": "die",
-   "s": 50.607,
-   "e": 50.723,
-   "radio": false
-  },
-  {
-   "w": "Schiebetür",
-   "s": 50.793,
-   "e": 51.257,
-   "radio": false
-  },
-  {
-   "w": "auf",
-   "s": 51.373,
-   "e": 51.663,
+   "s": 0.6,
+   "e": 1.121,
    "radio": false
   },
   {
    "w": "Die",
-   "s": 52.162,
-   "e": 52.406,
+   "s": 1.701,
+   "e": 1.781,
    "radio": false
   },
   {
-   "w": "Spezialeinheit",
-   "s": 52.487,
-   "e": 53.253,
+   "w": "Stadt",
+   "s": 1.821,
+   "e": 2.001,
    "radio": false
   },
   {
-   "w": "steigt",
-   "s": 53.288,
-   "e": 53.52,
+   "w": "schläft",
+   "s": 2.042,
+   "e": 2.362,
    "radio": false
   },
   {
-   "w": "aus",
-   "s": 53.567,
-   "e": 53.996,
+   "w": "fast",
+   "s": 2.582,
+   "e": 2.842,
+   "radio": false
+  },
+  {
+   "w": "Nur",
+   "s": 3.783,
+   "e": 3.883,
+   "radio": false
+  },
+  {
+   "w": "über",
+   "s": 3.983,
+   "e": 4.084,
+   "radio": false
+  },
+  {
+   "w": "den",
+   "s": 4.124,
+   "e": 4.204,
+   "radio": false
+  },
+  {
+   "w": "Dächern",
+   "s": 4.244,
+   "e": 4.484,
+   "radio": false
+  },
+  {
+   "w": "kreist",
+   "s": 4.544,
+   "e": 4.924,
+   "radio": false
+  },
+  {
+   "w": "ein",
+   "s": 4.944,
+   "e": 5.045,
+   "radio": false
+  },
+  {
+   "w": "Hubschrauber",
+   "s": 5.105,
+   "e": 5.705,
    "radio": false
   },
   {
    "w": "und",
-   "s": 54.078,
-   "e": 54.287,
+   "s": 6.146,
+   "e": 6.246,
    "radio": false
   },
   {
-   "w": "Tommy",
-   "s": 54.379,
-   "e": 54.623,
+   "w": "sein",
+   "s": 6.266,
+   "e": 6.386,
    "radio": false
   },
   {
-   "w": "fährt",
-   "s": 54.658,
-   "e": 54.797,
+   "w": "Licht",
+   "s": 6.426,
+   "e": 6.586,
    "radio": false
   },
   {
-   "w": "herum",
-   "s": 54.821,
-   "e": 55.273,
-   "radio": false
-  },
-  {
-   "w": "Von",
-   "s": 56.073,
-   "e": 56.34,
-   "radio": false
-  },
-  {
-   "w": "oben",
-   "s": 56.374,
-   "e": 56.769,
-   "radio": false
-  },
-  {
-   "w": "sieht",
-   "s": 56.862,
-   "e": 57.025,
+   "w": "tastet",
+   "s": 6.626,
+   "e": 6.946,
    "radio": false
   },
   {
    "w": "die",
-   "s": 57.059,
-   "e": 57.152,
+   "s": 6.966,
+   "e": 7.067,
    "radio": false
   },
   {
-   "w": "Wärmebildkamera",
-   "s": 57.187,
-   "e": 58.197,
+   "w": "Straße",
+   "s": 7.067,
+   "e": 7.427,
    "radio": false
   },
   {
-   "w": "alles",
-   "s": 58.267,
-   "e": 58.557,
+   "w": "ab",
+   "s": 7.487,
+   "e": 7.567,
    "radio": false
   },
   {
-   "w": "Zwei",
-   "s": 58.986,
-   "e": 59.497,
+   "w": "Unten",
+   "s": 8.467,
+   "e": 8.708,
+   "radio": false
+  },
+  {
+   "w": "biegen",
+   "s": 8.788,
+   "e": 8.989,
+   "radio": false
+  },
+  {
+   "w": "zwei",
+   "s": 9.069,
+   "e": 9.249,
    "radio": false
   },
   {
    "w": "Männer",
-   "s": 59.555,
-   "e": 59.857,
+   "s": 9.33,
+   "e": 9.55,
    "radio": false
   },
   {
-   "w": "Kein",
-   "s": 60.437,
-   "e": 60.762,
+   "w": "um",
+   "s": 9.67,
+   "e": 9.75,
    "radio": false
   },
   {
-   "w": "Ausweg",
-   "s": 60.808,
-   "e": 61.389,
+   "w": "die",
+   "s": 9.751,
+   "e": 9.851,
    "radio": false
   },
   {
-   "w": "Ziele",
-   "s": 61.689,
-   "e": 61.991,
-   "radio": true
-  },
-  {
-   "w": "erfasst",
-   "s": 62.014,
-   "e": 62.478,
-   "radio": true
-  },
-  {
-   "w": "Nur",
-   "s": 63.328,
-   "e": 63.664,
+   "w": "Ecke",
+   "s": 9.871,
+   "e": 10.051,
    "radio": false
   },
   {
-   "w": "eine",
-   "s": 63.746,
-   "e": 64.024,
+   "w": "Ghost",
+   "s": 10.633,
+   "e": 10.914,
    "radio": false
   },
   {
-   "w": "Frage",
-   "s": 64.059,
-   "e": 64.466,
+   "w": "und",
+   "s": 11.134,
+   "e": 11.214,
    "radio": false
   },
   {
-   "w": "bleibt",
-   "s": 64.5,
-   "e": 64.965,
+   "w": "Tommy",
+   "s": 11.275,
+   "e": 11.555,
    "radio": false
   },
   {
-   "w": "Wer",
-   "s": 65.371,
-   "e": 65.638,
+   "w": "Sie",
+   "s": 12.197,
+   "e": 12.317,
    "radio": false
   },
   {
-   "w": "hat",
-   "s": 65.661,
-   "e": 65.812,
+   "w": "kennen",
+   "s": 12.357,
+   "e": 12.578,
+   "radio": false
+  },
+  {
+   "w": "sich",
+   "s": 12.658,
+   "e": 12.758,
+   "radio": false
+  },
+  {
+   "w": "seit",
+   "s": 12.819,
+   "e": 12.959,
+   "radio": false
+  },
+  {
+   "w": "der",
+   "s": 12.999,
+   "e": 13.099,
+   "radio": false
+  },
+  {
+   "w": "Kindheit",
+   "s": 13.119,
+   "e": 13.541,
+   "radio": false
+  },
+  {
+   "w": "Für",
+   "s": 14.483,
+   "e": 14.603,
    "radio": false
   },
   {
    "w": "sie",
-   "s": 65.858,
-   "e": 66.056,
+   "s": 14.724,
+   "e": 14.864,
+   "radio": false
+  },
+  {
+   "w": "ist",
+   "s": 14.964,
+   "e": 15.064,
+   "radio": false
+  },
+  {
+   "w": "das",
+   "s": 15.105,
+   "e": 15.225,
+   "radio": false
+  },
+  {
+   "w": "keine",
+   "s": 15.305,
+   "e": 15.526,
+   "radio": false
+  },
+  {
+   "w": "Freundschaft",
+   "s": 15.606,
+   "e": 16.167,
+   "radio": false
+  },
+  {
+   "w": "Das",
+   "s": 16.729,
+   "e": 16.849,
+   "radio": false
+  },
+  {
+   "w": "sind",
+   "s": 16.889,
+   "e": 17.01,
+   "radio": false
+  },
+  {
+   "w": "Brüder",
+   "s": 17.09,
+   "e": 17.391,
+   "radio": false
+  },
+  {
+   "w": "Adler",
+   "s": 18.141,
+   "e": 18.483,
+   "radio": true
+  },
+  {
+   "w": "eins",
+   "s": 18.583,
+   "e": 18.824,
+   "radio": true
+  },
+  {
+   "w": "an",
+   "s": 18.924,
+   "e": 19.025,
+   "radio": true
+  },
+  {
+   "w": "Zentrale",
+   "s": 19.185,
+   "e": 19.767,
+   "radio": true
+  },
+  {
+   "w": "Zwei",
+   "s": 20.409,
+   "e": 20.61,
+   "radio": true
+  },
+  {
+   "w": "Personen",
+   "s": 20.69,
+   "e": 21.172,
+   "radio": true
+  },
+  {
+   "w": "Hauptstraße",
+   "s": 21.313,
+   "e": 22.055,
+   "radio": true
+  },
+  {
+   "w": "Höhe",
+   "s": 22.236,
+   "e": 22.437,
+   "radio": true
+  },
+  {
+   "w": "Kiosk",
+   "s": 22.517,
+   "e": 23.139,
+   "radio": true
+  },
+  {
+   "w": "Ghost",
+   "s": 23.939,
+   "e": 24.12,
+   "radio": false
+  },
+  {
+   "w": "trägt",
+   "s": 24.14,
+   "e": 24.44,
+   "radio": false
+  },
+  {
+   "w": "wie",
+   "s": 24.681,
+   "e": 24.761,
+   "radio": false
+  },
+  {
+   "w": "immer",
+   "s": 24.821,
+   "e": 25.022,
+   "radio": false
+  },
+  {
+   "w": "Anzug",
+   "s": 25.422,
+   "e": 25.743,
+   "radio": false
+  },
+  {
+   "w": "Er",
+   "s": 26.344,
+   "e": 26.424,
+   "radio": false
+  },
+  {
+   "w": "plant",
+   "s": 26.465,
+   "e": 26.705,
+   "radio": false
+  },
+  {
+   "w": "jeden",
+   "s": 26.725,
+   "e": 26.946,
+   "radio": false
+  },
+  {
+   "w": "Schritt",
+   "s": 26.966,
+   "e": 27.186,
+   "radio": false
+  },
+  {
+   "w": "im",
+   "s": 27.266,
+   "e": 27.346,
+   "radio": false
+  },
+  {
+   "w": "Voraus",
+   "s": 27.407,
+   "e": 27.767,
+   "radio": false
+  },
+  {
+   "w": "Und",
+   "s": 28.73,
+   "e": 28.81,
+   "radio": false
+  },
+  {
+   "w": "was",
+   "s": 28.85,
+   "e": 28.99,
+   "radio": false
+  },
+  {
+   "w": "er",
+   "s": 29.03,
+   "e": 29.11,
+   "radio": false
+  },
+  {
+   "w": "wirklich",
+   "s": 29.13,
+   "e": 29.411,
+   "radio": false
+  },
+  {
+   "w": "denkt",
+   "s": 29.491,
+   "e": 29.812,
+   "radio": false
+  },
+  {
+   "w": "das",
+   "s": 30.012,
+   "e": 30.153,
+   "radio": false
+  },
+  {
+   "w": "sieht",
+   "s": 30.193,
+   "e": 30.353,
+   "radio": false
+  },
+  {
+   "w": "man",
+   "s": 30.433,
+   "e": 30.533,
+   "radio": false
+  },
+  {
+   "w": "ihm",
+   "s": 30.594,
+   "e": 30.674,
+   "radio": false
+  },
+  {
+   "w": "nie",
+   "s": 30.714,
+   "e": 30.814,
+   "radio": false
+  },
+  {
+   "w": "an",
+   "s": 30.874,
+   "e": 30.994,
+   "radio": false
+  },
+  {
+   "w": "Tommy",
+   "s": 31.794,
+   "e": 32.055,
+   "radio": false
+  },
+  {
+   "w": "ist",
+   "s": 32.175,
+   "e": 32.275,
+   "radio": false
+  },
+  {
+   "w": "das",
+   "s": 32.295,
+   "e": 32.415,
+   "radio": false
+  },
+  {
+   "w": "Gegenteil",
+   "s": 32.475,
+   "e": 32.916,
+   "radio": false
+  },
+  {
+   "w": "Laut",
+   "s": 33.557,
+   "e": 33.797,
+   "radio": false
+  },
+  {
+   "w": "Schnell",
+   "s": 34.419,
+   "e": 34.719,
+   "radio": false
+  },
+  {
+   "w": "Und",
+   "s": 35.721,
+   "e": 35.801,
+   "radio": false
+  },
+  {
+   "w": "immer",
+   "s": 35.881,
+   "e": 36.061,
+   "radio": false
+  },
+  {
+   "w": "der",
+   "s": 36.121,
+   "e": 36.201,
+   "radio": false
+  },
+  {
+   "w": "Erste",
+   "s": 36.282,
+   "e": 36.602,
+   "radio": false
+  },
+  {
+   "w": "der",
+   "s": 36.843,
+   "e": 36.943,
+   "radio": false
+  },
+  {
+   "w": "zuschlägt",
+   "s": 37.023,
+   "e": 37.524,
+   "radio": false
+  },
+  {
+   "w": "Zentrale",
+   "s": 38.274,
+   "e": 38.755,
+   "radio": true
+  },
+  {
+   "w": "an",
+   "s": 38.855,
+   "e": 38.955,
+   "radio": true
+  },
+  {
+   "w": "alle",
+   "s": 39.095,
+   "e": 39.316,
+   "radio": true
+  },
+  {
+   "w": "Einheiten",
+   "s": 39.456,
+   "e": 39.997,
+   "radio": true
+  },
+  {
+   "w": "Zugriff",
+   "s": 40.919,
+   "e": 41.28,
+   "radio": true
+  },
+  {
+   "w": "vorbereiten",
+   "s": 41.34,
+   "e": 41.981,
+   "radio": true
+  },
+  {
+   "w": "Heute",
+   "s": 42.331,
+   "e": 42.592,
+   "radio": false
+  },
+  {
+   "w": "Nacht",
+   "s": 42.672,
+   "e": 42.872,
+   "radio": false
+  },
+  {
+   "w": "warten",
+   "s": 42.952,
+   "e": 43.212,
+   "radio": false
+  },
+  {
+   "w": "sie",
+   "s": 43.233,
+   "e": 43.353,
+   "radio": false
+  },
+  {
+   "w": "auf",
+   "s": 43.373,
+   "e": 43.473,
+   "radio": false
+  },
+  {
+   "w": "einen",
+   "s": 43.533,
+   "e": 43.673,
+   "radio": false
+  },
+  {
+   "w": "Kontakt",
+   "s": 43.733,
+   "e": 44.174,
+   "radio": false
+  },
+  {
+   "w": "Eine",
+   "s": 44.735,
+   "e": 44.855,
+   "radio": false
+  },
+  {
+   "w": "Minute",
+   "s": 44.895,
+   "e": 45.216,
+   "radio": false
+  },
+  {
+   "w": "Dann",
+   "s": 45.797,
+   "e": 45.957,
+   "radio": false
+  },
+  {
+   "w": "zwei",
+   "s": 46.037,
+   "e": 46.277,
+   "radio": false
+  },
+  {
+   "w": "Doch",
+   "s": 46.898,
+   "e": 47.039,
+   "radio": false
+  },
+  {
+   "w": "niemand",
+   "s": 47.159,
+   "e": 47.459,
+   "radio": false
+  },
+  {
+   "w": "kommt",
+   "s": 47.559,
+   "e": 47.78,
+   "radio": false
+  },
+  {
+   "w": "Stattdessen",
+   "s": 48.681,
+   "e": 49.182,
+   "radio": false
+  },
+  {
+   "w": "gehen",
+   "s": 49.262,
+   "e": 49.462,
+   "radio": false
+  },
+  {
+   "w": "überall",
+   "s": 49.543,
+   "e": 49.863,
+   "radio": false
+  },
+  {
+   "w": "die",
+   "s": 49.883,
+   "e": 50.003,
+   "radio": false
+  },
+  {
+   "w": "Blaulichter",
+   "s": 50.023,
+   "e": 50.484,
+   "radio": false
+  },
+  {
+   "w": "an",
+   "s": 50.524,
+   "e": 50.624,
+   "radio": false
+  },
+  {
+   "w": "Ghost",
+   "s": 51.474,
+   "e": 51.715,
+   "radio": false
+  },
+  {
+   "w": "bleibt",
+   "s": 51.775,
+   "e": 51.995,
+   "radio": false
+  },
+  {
+   "w": "ruhig",
+   "s": 52.056,
+   "e": 52.296,
+   "radio": false
+  },
+  {
+   "w": "Er",
+   "s": 52.898,
+   "e": 52.978,
+   "radio": false
+  },
+  {
+   "w": "hebt",
+   "s": 53.018,
+   "e": 53.179,
+   "radio": false
+  },
+  {
+   "w": "nur",
+   "s": 53.199,
+   "e": 53.339,
+   "radio": false
+  },
+  {
+   "w": "die",
+   "s": 53.359,
+   "e": 53.46,
+   "radio": false
+  },
+  {
+   "w": "Hand",
+   "s": 53.52,
+   "e": 53.68,
+   "radio": false
+  },
+  {
+   "w": "ganz",
+   "s": 54.041,
+   "e": 54.242,
+   "radio": false
+  },
+  {
+   "w": "langsam",
+   "s": 54.322,
+   "e": 54.663,
+   "radio": false
+  },
+  {
+   "w": "Tommy",
+   "s": 55.565,
+   "e": 55.806,
+   "radio": false
+  },
+  {
+   "w": "beugt",
+   "s": 55.926,
+   "e": 56.167,
+   "radio": false
+  },
+  {
+   "w": "sich",
+   "s": 56.227,
+   "e": 56.348,
+   "radio": false
+  },
+  {
+   "w": "vor",
+   "s": 56.448,
+   "e": 56.608,
+   "radio": false
+  },
+  {
+   "w": "und",
+   "s": 56.949,
+   "e": 57.05,
+   "radio": false
+  },
+  {
+   "w": "lässt",
+   "s": 57.11,
+   "e": 57.33,
+   "radio": false
+  },
+  {
+   "w": "ihn",
+   "s": 57.411,
+   "e": 57.511,
+   "radio": false
+  },
+  {
+   "w": "nicht",
+   "s": 57.531,
+   "e": 57.711,
+   "radio": false
+  },
+  {
+   "w": "mehr",
+   "s": 57.731,
+   "e": 57.852,
+   "radio": false
+  },
+  {
+   "w": "aus",
+   "s": 57.912,
+   "e": 58.012,
+   "radio": false
+  },
+  {
+   "w": "den",
+   "s": 58.052,
+   "e": 58.153,
+   "radio": false
+  },
+  {
+   "w": "Augen",
+   "s": 58.233,
+   "e": 58.453,
+   "radio": false
+  },
+  {
+   "w": "Zugriff",
+   "s": 59.153,
+   "e": 59.536,
+   "radio": true
+  },
+  {
+   "w": "frei",
+   "s": 59.556,
+   "e": 59.737,
+   "radio": true
+  },
+  {
+   "w": "Dann",
+   "s": 60.037,
+   "e": 60.198,
+   "radio": false
+  },
+  {
+   "w": "geht",
+   "s": 60.238,
+   "e": 60.399,
+   "radio": false
+  },
+  {
+   "w": "die",
+   "s": 60.419,
+   "e": 60.499,
+   "radio": false
+  },
+  {
+   "w": "Schiebetür",
+   "s": 60.519,
+   "e": 60.921,
+   "radio": false
+  },
+  {
+   "w": "auf",
+   "s": 61.041,
+   "e": 61.202,
+   "radio": false
+  },
+  {
+   "w": "Die",
+   "s": 61.824,
+   "e": 61.924,
+   "radio": false
+  },
+  {
+   "w": "Spezialeinheit",
+   "s": 61.985,
+   "e": 62.728,
+   "radio": false
+  },
+  {
+   "w": "steigt",
+   "s": 62.768,
+   "e": 63.009,
+   "radio": false
+  },
+  {
+   "w": "aus",
+   "s": 63.109,
+   "e": 63.27,
+   "radio": false
+  },
+  {
+   "w": "Und",
+   "s": 64.213,
+   "e": 64.293,
+   "radio": false
+  },
+  {
+   "w": "Tommy",
+   "s": 64.374,
+   "e": 64.615,
+   "radio": false
+  },
+  {
+   "w": "fährt",
+   "s": 64.715,
+   "e": 64.916,
+   "radio": false
+  },
+  {
+   "w": "herum",
+   "s": 64.936,
+   "e": 65.237,
+   "radio": false
+  },
+  {
+   "w": "Von",
+   "s": 66.037,
+   "e": 66.177,
+   "radio": false
+  },
+  {
+   "w": "oben",
+   "s": 66.338,
+   "e": 66.538,
+   "radio": false
+  },
+  {
+   "w": "sieht",
+   "s": 66.578,
+   "e": 66.719,
+   "radio": false
+  },
+  {
+   "w": "die",
+   "s": 66.719,
+   "e": 66.839,
+   "radio": false
+  },
+  {
+   "w": "Wärmebildkamera",
+   "s": 66.859,
+   "e": 67.701,
+   "radio": false
+  },
+  {
+   "w": "alles",
+   "s": 67.781,
+   "e": 68.022,
+   "radio": false
+  },
+  {
+   "w": "Zwei",
+   "s": 69.024,
+   "e": 69.264,
+   "radio": false
+  },
+  {
+   "w": "Männer",
+   "s": 69.364,
+   "e": 69.605,
+   "radio": false
+  },
+  {
+   "w": "Kein",
+   "s": 70.206,
+   "e": 70.407,
+   "radio": false
+  },
+  {
+   "w": "Ausweg",
+   "s": 70.487,
+   "e": 70.868,
+   "radio": false
+  },
+  {
+   "w": "Ziele",
+   "s": 71.268,
+   "e": 71.51,
+   "radio": true
+  },
+  {
+   "w": "erfasst",
+   "s": 71.59,
+   "e": 72.034,
+   "radio": true
+  },
+  {
+   "w": "Nur",
+   "s": 72.984,
+   "e": 73.205,
+   "radio": false
+  },
+  {
+   "w": "eine",
+   "s": 73.406,
+   "e": 73.607,
+   "radio": false
+  },
+  {
+   "w": "Frage",
+   "s": 73.768,
+   "e": 74.19,
+   "radio": false
+  },
+  {
+   "w": "bleibt",
+   "s": 74.27,
+   "e": 74.592,
+   "radio": false
+  },
+  {
+   "w": "Wer",
+   "s": 75.597,
+   "e": 75.778,
+   "radio": false
+  },
+  {
+   "w": "hat",
+   "s": 75.878,
+   "e": 76.039,
+   "radio": false
+  },
+  {
+   "w": "sie",
+   "s": 76.18,
+   "e": 76.32,
    "radio": false
   },
   {
    "w": "verraten",
-   "s": 66.114,
-   "e": 66.671,
+   "s": 76.401,
+   "e": 76.984,
    "radio": false
   },
   {
    "w": "Fortsetzung",
-   "s": 67.32,
-   "e": 68.122,
+   "s": 77.884,
+   "e": 78.429,
    "radio": false
   },
   {
    "w": "folgt",
-   "s": 68.168,
-   "e": 68.667,
+   "s": 78.53,
+   "e": 78.833,
    "radio": false
   }
  ],
  "events": [
   {
    "clip": "n1",
-   "at": -0.021
+   "at": 0.5
   },
   {
    "clip": "n2",
-   "at": 5.678
+   "at": 8.347
   },
   {
    "clip": "r1",
-   "at": 13.648
+   "at": 18.021
   },
   {
    "clip": "n3",
-   "at": 18.22
+   "at": 23.859
   },
   {
    "clip": "n4",
-   "at": 24.429
+   "at": 31.714
   },
   {
    "clip": "r2",
-   "at": 30.937
+   "at": 37.893
   },
   {
    "clip": "n5",
-   "at": 34.085
+   "at": 42.271
   },
   {
    "clip": "n6",
-   "at": 41.993
+   "at": 51.474
   },
   {
    "clip": "r3",
-   "at": 48.486
+   "at": 59.032
   },
   {
    "clip": "n7",
-   "at": 49.587
+   "at": 59.977
   },
   {
    "clip": "n8",
-   "at": 55.61
+   "at": 65.957
   },
   {
    "clip": "r4",
-   "at": 61.261
+   "at": 71.127
   },
   {
    "clip": "n9",
-   "at": 62.842
+   "at": 72.843
+  },
+  {
+   "clip": "n10",
+   "at": 77.723
   }
  ]
 }

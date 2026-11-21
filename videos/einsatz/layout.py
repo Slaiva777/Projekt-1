@@ -5,11 +5,11 @@ import json, numpy as np, soundfile as sf
 from scipy.signal import butter, sosfilt, resample_poly
 V = "videos/einsatz/voice"; SR = 48000; FPS = 30
 SHOTS = [
-    ("heli", [("n1", 0.5)]), ("walk", [("n2", 0.35)]), ("look", [("r1", 0.3)]), ("ghost", [("n3", 0.35)]),
+    ("heli", [("n1", 0.6)]), ("walk", [("n2", 0.45)]), ("look", [("r1", 0.3)]), ("ghost", [("n3", 0.35)]),
     ("tommy", [("n4", 0.35)]), ("wait", [("r2", 0.3), ("n5", 0.35)]), ("dialog", [("n6", 0.4)]),
-    ("move", [("r3", 0.25), ("n7", 0.3)]), ("thermal", [("n8", 0.35), ("r4", 0.3)]), ("final", [("n9", 0.4)]),
+    ("move", [("r3", 0.25), ("n7", 0.3)]), ("thermal", [("n8", 0.35), ("r4", 0.4)]), ("final", [("n9", 0.5), ("n10", 0.9)]),
 ]
-TAIL = {"final": 3.0}
+TAIL = {"final": 2.6}
 clips = {}
 for k in {c for _, cs in SHOTS for c, _ in cs}:
     a, sr = sf.read(f"{V}/{k}.wav"); a = resample_poly(a, SR, sr) if sr != SR else a

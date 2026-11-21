@@ -7,7 +7,7 @@ import * as THREE from "three";
 import { AbsoluteFill, getInputProps, useCurrentFrame } from "remotion";
 import { ThreeCanvas } from "@remotion/three";
 import { useFrame, useThree } from "@react-three/fiber";
-import { BlendFunction, BloomEffect, EffectComposer, EffectPass, RenderPass, ToneMappingEffect, ToneMappingMode } from "postprocessing";
+import { BlendFunction, BloomEffect, DepthOfFieldEffect, EffectComposer, EffectPass, RenderPass, ToneMappingEffect, ToneMappingMode } from "postprocessing";
 
 export type V3 = [number, number, number];
 export type Cam = { pos: V3; look: V3; fov?: number; roll?: number };
@@ -16,7 +16,12 @@ export type SetUpdate = (f: number, t: number) => void;
 export type Built = { root: THREE.Object3D; update?: SetUpdate; mood: Mood; center: V3 };
 export type Shot3 = { a: number; b: number; set: string; cam: (f: number) => Cam; whip?: number /** direction of the whip into this shot */; dof?: number; thermal?: boolean; cut?: boolean /** hard cut, no whip */ };
 export type Word = { w: string; s: number; e: number; radio?: boolean };
-export type Def3 = { build: () => Record<string, Built>; shots: Shot3[]; words: Word[]; total: number; captionY?: number; bloom?: number; overlay?: (f: number) => React.ReactNode; grade?: (f: number) => string };
+export type Def3 = {
+  build: () => Record<string, Built>; shots: Shot3[]; words: Word[]; total: number; captionY?: number; bloom?: number;
+  overlay?: (f: number) => React.ReactNode; grade?: (f: number) => string;
+  /** crossfade length in frames (replaces whip pans) */ xfade?: number; /** handheld drift amplitude (rad) */ handheld?: number;
+  /** depth of field bokeh scale */ dof?: number; /** environment reflections: intensity + panel colours */ env?: { k: number; panels: [string, number][] };
+};
 
 const FPS = 30;
 export const lerp = (a: number, b: number, u: number) => a + (b - a) * u;
@@ -71,8 +76,8 @@ class Rig {
     };
     walk(root, 0.14);
   }
-  apply(def: Def3, f: number, cam: THREE.PerspectiveCamera) {
-    const s = shotAt(def.shots, f), B = this.sets[s.set], m = B.mood, t = f / FPS;
+  apply(def: Def3, f: number, cam: THREE.PerspectiveCamera, force?: Shot3) {
+    const s = force ?? shotAt(def.shots, f), B = this.sets[s.set], m = B.mood, t = f / FPS;
     for (const k in this.sets) this.sets[k].root.visible = k === s.set;
     this.thermal(B.root, !!s.thermal); this.sky.visible = !s.thermal;
     this.scene.background = s.thermal ? new THREE.Color("#141414") : null;
@@ -82,10 +87,15 @@ class Rig {
     // whip pan around cuts: extra yaw that accelerates into the cut and decelerates out of it
     const into = f - s.a, out = s.b - f, dir = s.whip ?? 1;
     let yaw = 0;
-    if (into < WHIP && s.a > 0 && !s.cut) yaw = dir * Math.pow(1 - into / WHIP, 2) * 0.55;
+    if (def.xfade) { /* no whips */ } else if (into < WHIP && s.a > 0 && !s.cut) yaw = dir * Math.pow(1 - into / WHIP, 2) * 0.55;
     const next = def.shots[def.shots.indexOf(s) + 1];
-    if (next && !next.cut && out <= WHIP) yaw = -(next.whip ?? 1) * Math.pow(1 - out / (WHIP + 1), 2) * 0.55;
+    if (!def.xfade && next && !next.cut && out <= WHIP) yaw = -(next.whip ?? 1) * Math.pow(1 - out / (WHIP + 1), 2) * 0.55;
     cam.rotateY(yaw); if (c.roll) cam.rotateZ(c.roll);
+    if (def.handheld && !s.thermal) {
+      const A = def.handheld;
+      cam.rotateX(A * (Math.sin(t * 0.71) * 0.6 + Math.sin(t * 1.33 + 1.3) * 0.3 + Math.sin(t * 2.9 + 0.4) * 0.1));
+      cam.rotateY(A * (Math.sin(t * 0.53 + 2.1) * 0.6 + Math.sin(t * 1.17 + 0.2) * 0.3 + Math.sin(t * 2.3 + 1.7) * 0.1));
+    }
     cam.fov = c.fov ?? 40; cam.near = 0.05; cam.far = 1200; cam.updateProjectionMatrix(); cam.updateMatrixWorld();
     this.sky.position.copy(cam.position);
     (this.sky.material as THREE.ShaderMaterial).uniforms.top.value.set(m.sky[0]);
@@ -98,28 +108,48 @@ class Rig {
     const sd = new THREE.Vector3(...m.sun).normalize();
     this.sun.position.copy(look).addScaledVector(sd, 60); this.sun.target.position.copy(look); this.sun.target.updateMatrixWorld();
     const sc = this.sun.shadow.camera; sc.left = -R; sc.right = R; sc.top = R; sc.bottom = -R; sc.near = 1; sc.far = 160; sc.updateProjectionMatrix();
-    return { yaw, exposure: m.exposure ?? 1 };
+    return { yaw, exposure: m.exposure ?? 1, look, thermal: !!s.thermal };
   }
 }
 
-const Inner: React.FC<{ def: Def3 }> = ({ def }) => {
+const envFor = (gl: THREE.WebGLRenderer, env: NonNullable<Def3["env"]>) => {
+  const es = new THREE.Scene();
+  es.add(new THREE.Mesh(new THREE.SphereGeometry(50, 32, 16), new THREE.MeshBasicMaterial({ color: "#05070d", side: THREE.BackSide })));
+  const r = (n: number) => { const x = Math.sin(n * 91.7) * 43758.5; return x - Math.floor(x); };
+  env.panels.forEach(([col, n], k) => {
+    for (let i = 0; i < n; i++) {
+      const a = r(k * 50 + i) * Math.PI * 2, y = -2 + r(k * 50 + i + 0.5) * 14;
+      const p = new THREE.Mesh(new THREE.PlaneGeometry(2 + r(i + k) * 3, 1 + r(i * 3 + k) * 2), new THREE.MeshBasicMaterial({ color: col, side: THREE.DoubleSide }));
+      p.position.set(Math.cos(a) * 30, y, Math.sin(a) * 30); p.lookAt(0, y, 0); es.add(p);
+    }
+  });
+  const pm = new THREE.PMREMGenerator(gl); const tex = pm.fromScene(es, 0.02).texture; pm.dispose(); return tex;
+};
+
+const Inner: React.FC<{ def: Def3; force?: number; active?: boolean }> = ({ def, force, active = true }) => {
   const f = useCurrentFrame();
   const { camera, gl, scene, size } = useThree();
   const rig = useMemo(() => new Rig(def), [def]);
-  const comp = useMemo(() => {
+  useMemo(() => { if (def.env) { rig.scene.environment = envFor(gl, def.env); rig.scene.environmentIntensity = def.env.k; } }, [def, gl, rig]);
+  const fx = useMemo(() => {
     if (!def.bloom) return null;
     const c = new EffectComposer(gl, { multisampling: 4, frameBufferType: THREE.HalfFloatType });
     c.addPass(new RenderPass(rig.scene, camera));
+    const dof = def.dof ? new DepthOfFieldEffect(camera, { worldFocusRange: 2.5, bokehScale: def.dof, resolutionScale: 0.75 }) : null;
+    if (dof) { dof.target = new THREE.Vector3(); c.addPass(new EffectPass(camera, dof)); }
     c.addPass(new EffectPass(camera, new BloomEffect({ blendFunction: BlendFunction.ADD, intensity: def.bloom, luminanceThreshold: 0.75, luminanceSmoothing: 0.25, mipmapBlur: true, radius: 0.7 }), new ToneMappingEffect({ mode: ToneMappingMode.ACES_FILMIC })));
-    return c;
+    return { c, dof };
   }, [def, gl, rig, camera]);
-  useMemo(() => comp?.setSize(size.width, size.height), [comp, size]);
-  gl.toneMapping = comp ? THREE.NoToneMapping : THREE.ACESFilmicToneMapping; gl.outputColorSpace = THREE.SRGBColorSpace;
+  useMemo(() => fx?.c.setSize(size.width, size.height), [fx, size]);
+  gl.toneMapping = fx ? THREE.NoToneMapping : THREE.ACESFilmicToneMapping; gl.outputColorSpace = THREE.SRGBColorSpace;
   gl.shadowMap.enabled = true; gl.shadowMap.type = THREE.PCFShadowMap;
-  const r = rig.apply(def, f, camera as THREE.PerspectiveCamera);
-  gl.toneMappingExposure = r.exposure;
+  if (active) {
+    const r = rig.apply(def, f, camera as THREE.PerspectiveCamera, force !== undefined ? def.shots[force] : undefined);
+    gl.toneMappingExposure = r.exposure;
+    if (fx?.dof) { fx.dof.target!.copy(r.look); fx.dof.bokehScale = r.thermal ? 0 : def.dof!; }
+  }
   scene.background = null;
-  useFrame(() => { if (comp) comp.render(); }, comp ? 1 : 0);
+  useFrame(() => { if (fx && active) fx.c.render(); }, fx ? 1 : 0);
   return <primitive object={rig.scene} dispose={null} />;
 };
 
@@ -145,18 +175,25 @@ const Caption: React.FC<{ words: Word[]; f: number; y: number }> = ({ words, f, 
 export const makeShort3 = (def: Def3) => {
   const Comp: React.FC = () => {
     const f = useCurrentFrame();
-    const s = shotAt(def.shots, f), into = f - s.a, out = s.b - f;
-    const nx = def.shots[def.shots.indexOf(s) + 1];
+    const s = shotAt(def.shots, f), into = f - s.a, out = s.b - f, si = def.shots.indexOf(s);
+    const nx = def.shots[si + 1];
     const near = Math.min(s.a > 0 && !s.cut ? into : 99, nx && !nx.cut ? out : 99);
-    const blur = near < WHIP ? (1 - near / WHIP) * 9 : 0;
+    const blur = !def.xfade && near < WHIP ? (1 - near / WHIP) * 9 : 0;
+    // crossfade: the previous shot keeps running on a second canvas and fades out over the new one
+    const XF = def.xfade ?? 0, inXf = XF > 0 && si > 0 && !s.cut && into < XF;
+    const u = inXf ? into / XF : 1, prevAlpha = inXf ? 1 - u * u * (3 - 2 * u) : 0;
+    const canvas = (child: React.ReactNode, alpha: number) => (
+      <AbsoluteFill style={{ opacity: alpha, filter: `blur(${blur.toFixed(2)}px) ${def.grade ? def.grade(f) : "saturate(0.92) contrast(1.04) sepia(0.06)"}` }}>
+        <ThreeCanvas width={1020} height={1780} {...(dpr() ? { dpr: dpr() } : {})} shadows gl={{ antialias: true, powerPreference: "high-performance" }} camera={{ fov: 40 }}>
+          {child}
+        </ThreeCanvas>
+      </AbsoluteFill>
+    );
     return (
       <AbsoluteFill style={{ background: "#000" }}>
         <AbsoluteFill style={{ left: 30, right: 30, top: 70, bottom: 70, borderRadius: 44, overflow: "hidden", background: "#000" }}>
-          <AbsoluteFill style={{ filter: `blur(${blur.toFixed(2)}px) ${def.grade ? def.grade(f) : "saturate(0.92) contrast(1.04) sepia(0.06)"}` }}>
-            <ThreeCanvas width={1020} height={1780} {...(dpr() ? { dpr: dpr() } : {})} shadows gl={{ antialias: true, powerPreference: "high-performance" }} camera={{ fov: 40 }}>
-              <Inner def={def} />
-            </ThreeCanvas>
-          </AbsoluteFill>
+          {canvas(<Inner def={def} />, 1)}
+          {XF > 0 && canvas(<Inner def={def} force={Math.max(0, si - 1)} active={inXf} />, prevAlpha)}
           {/* vignette */}
           <AbsoluteFill style={{ background: "radial-gradient(ellipse 75% 62% at 50% 48%, rgba(0,0,0,0) 55%, rgba(10,6,4,0.55) 100%)" }} />
           {def.overlay?.(f)}

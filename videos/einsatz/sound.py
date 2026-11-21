@@ -21,6 +21,12 @@ def place(dst, src, at, g=1.0):
 L = np.zeros(N); R = np.zeros(N)
 def both(x, g=1.0, pan=0.0): global L, R; L += x * g * (1 - max(0, pan)); R += x * g * (1 + min(0, pan))
 both(lowp(noise(N), 500) * 0.05 + lowp(noise(N), 110) * 0.08)                     # night bed
+# rain: steady hiss, gutter trickle and random drips on cars / awnings
+both(filt(noise(N), 1800, 9000) * 0.075 * (1 + 0.15 * np.sin(2 * np.pi * 0.07 * t)))
+both(filt(noise(N), 300, 1200) * 0.03 * (0.6 + 0.4 * np.abs(np.sin(2 * np.pi * 0.9 * t))), pan=0.4)
+for k in range(int(T * 9)):
+    at = rng.random() * T; n = int(0.03 * SR); d_ = np.sin(2 * np.pi * (2200 + rng.random() * 2600) * np.arange(n) / SR) * np.exp(-np.linspace(0, 12, n)) * 0.05
+    place(L, d_, at, rng.random()); place(R, d_, at, rng.random())
 # rotor (closer in heli / look / thermal shots)
 puls = (0.5 + 0.5 * np.cos(2 * np.pi * 21.0 * t)) ** 6
 near = np.full(N, 0.45)

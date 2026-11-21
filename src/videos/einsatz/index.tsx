@@ -6,9 +6,10 @@
 import React from "react";
 import * as THREE from "three";
 import { makeShort3, Built, Def3, Mood, V3, lerp, sm, Cam } from "../../engine3d/Short3D";
-import { Person, Look } from "../../engine3d/toon3d";
+import { Person, Look, mat } from "../../engine3d/toon3d";
 import { ground, rng, noiseTex } from "../../engine3d/props";
-import { policeVan, civilVan, helicopter, building, streetLamp, parkedCar, plane } from "../../engine3d/city";
+import { policeVan, civilVan, helicopter, building, streetLamp, parkedCar, plane, emi } from "../../engine3d/city";
+import { shopFront, pharmacyCross, rain, ripples, steam, tape, skyline, crossTraffic, tree, busStop, bin, bikeRack, trafficLight, windowWatcher, haze } from "../../engine3d/streetlife";
 import TL from "../../../videos/einsatz/voice/timeline.json";
 
 type TLT = { total: number; shots: { name: string; a: number; b: number }[]; words: { w: string; s: number; e: number; radio: boolean }[] };
@@ -57,7 +58,7 @@ const heliAt = (t: number) => {
 
 const build = (): Record<string, Built> => {
   const s = new THREE.Group(), r = rng(31), anims: ((t: number) => void)[] = [];
-  const asphalt = new THREE.MeshStandardMaterial({ map: noiseTex("asphalt", "#2a2c31", ["#1c1d21", "#3a3c42", "#26282d"], 5000, 512, 2, 22), roughness: 0.62, metalness: 0.1 });
+  const asphalt = new THREE.MeshStandardMaterial({ map: noiseTex("asphalt", "#2a2c31", ["#1c1d21", "#3a3c42", "#26282d"], 5000, 512, 2, 22), roughness: 0.34, metalness: 0.18 });
   const road = new THREE.Mesh(new THREE.PlaneGeometry(220, 10), asphalt); road.rotation.x = -Math.PI / 2; road.receiveShadow = true; s.add(road);
   for (const z of [-1, 1]) {
     const pave = ground(220, 3.6, "#55585e", ["#4a4d52", "#62656b"], "pave", 40, 0.12); pave.position.z = z * 6.8; s.add(pave);
@@ -73,6 +74,44 @@ const build = (): Record<string, Built> => {
   [-14, -4, 6, 16, 26].forEach((lx, k) => { const l = streetLamp(k === 1 || k === 2); l.position.set(lx, 0.12, -5.5); l.rotation.y = -Math.PI / 2; s.add(l); });
   [-9, 11].forEach((lx, k) => { const l = streetLamp(k === 0); l.position.set(lx, 0.12, 5.5); l.rotation.y = Math.PI / 2; s.add(l); });
   [[-18, -4.0, "#7a1f22"], [-24, -4.0, "#c8c8c8"], [13, -4.1, "#1f3a5a"], [19, -4.0, "#2a2a2a"], [-15, 4.1, "#4a5a3a"], [16, 4.1, "#8a8a90"]].forEach(([px, pz, c], k) => { const car = parkedCar(c as string, k); car.position.set(px as number, 0, pz as number); s.add(car); });
+  // ---- background life ----
+  const life: ((t: number) => void)[] = [];
+  const put = <T extends THREE.Object3D>(o: T, x: number, y: number, z: number, ry = 0) => { o.position.set(x, y, z); o.rotation.y = ry; s.add(o); return o; };
+  const SHOPS: [number, string, string, string][] = [[-12, "KIOSK", "#ffd23a", "#ffe6a8"], [-4.6, "APOTHEKE", "#3aff7a", "#d8ffe6"], [2.4, "BÄCKEREI", "#ffb46a", "#ffe2b8"], [9.2, "DÖNER", "#ff4a3a", "#ffd0a0"], [16, "SPÄTI", "#7ab8ff", "#d8e8ff"]];
+  SHOPS.forEach(([sx, nm, c, gl], k) => put(shopFront(6.2, nm, c, gl, k + 1), sx, 0, -8.56));
+  put(pharmacyCross(), -4.6 + 2.6, 3.6, -8.2, Math.PI / 2);
+  [[-9, "FRISEUR", "#ff7ad8", "#ffd8f0"], [-1.5, "BAR", "#ff3a8a", "#ffc0d8"], [6.5, "WÄSCHEREI", "#7affea", "#d8fff8"], [13.5, "IMBISS", "#ffd23a", "#ffe6a8"]].forEach(([sx, nm, c, gl], k) => put(shopFront(6.0, nm as string, c as string, gl as string, k + 9), sx as number, 0, 8.56, Math.PI));
+  const rn = rain(3200, 34, 14); s.add(rn.obj);
+  const rp = ripples(70, [-9, 9, -4.5, 4.5]); s.add(rp.obj); life.push(rp.upd);
+  const st = steam(); put(st.obj, 3.6, 0, 3.4); life.push(st.upd);
+  const tapes = [tape(new THREE.Vector3(-13, 0, -6.2), new THREE.Vector3(-13, 0, 6.2), 1), tape(new THREE.Vector3(13.5, 0, -6.2), new THREE.Vector3(13.5, 0, 6.2), 2)];
+  tapes.forEach((q) => { s.add(q.obj); life.push(q.upd); });
+  const sky = skyline(-48, 5); s.add(sky.obj); life.push(sky.upd);
+  const sky2 = skyline(52, 9); sky2.obj.rotation.y = Math.PI; s.add(sky2.obj); life.push(sky2.upd);
+  [crossTraffic(-46), crossTraffic(56, 2)].forEach((q) => { s.add(q.obj); life.push(q.upd); });
+  [[-21, -6.6], [-8.5, -6.6], [12.5, -6.6], [22, -6.6], [-17, 6.6], [-4.5, 6.6], [19, 6.6]].forEach(([tx, tz], k) => { const tr = tree(k + 3); put(tr.obj, tx, 0.12, tz); life.push(tr.upd); });
+  put(busStop(), -6, 0.12, 6.4, Math.PI);
+  [[-15.5, -5.6], [5.4, -5.6], [9.8, 5.6]].forEach(([bx, bz]) => put(bin(), bx, 0.12, bz));
+  put(bikeRack(5, 4), 6.5, 0.12, -6.3);
+  [[-40, -5.6], [-40, 5.6], [48, -5.6]].forEach(([lx, lz]) => { const tlg = trafficLight(); put(tlg.obj, lx, 0.12, lz, lz > 0 ? Math.PI : 0); life.push(tlg.upd); });
+  const watchers = [[-3.2, 4.3], [1.4, 7.4], [-7.6, 7.4], [5.8, 4.3], [-0.6, 10.5]].map(([wx, wy], k) => { const w = windowWatcher(k); put(w.obj, 0, 0, 0); w.obj.position.set(wx, wy, -8.5); return w; });
+  [[-9.5, 0.6], [0, 0.4], [9, 0.6]].forEach(([hz, hy]) => { const h = haze(90, 3.5, "#3a4770", 0.16); h.position.set(0, hy + 1.2, hz - 0.01 - 30); s.add(h); });
+  const hz2 = haze(120, 4, "#30405e", 0.2); hz2.position.set(0, 1.6, -30); s.add(hz2);
+  // background people: passers-by before the raid, onlookers with phones after
+  const passers = [
+    { L: { skin: "#e8b896", glove: "#e8b896", coat: "#7a2a3a", dress: true, hair: "#2a1a12", hairStyle: "bun" } as Look, z: -6.3, x0: 18, v: -0.9, um: "#1f3a6a" },
+    { L: { skin: "#8a5a3c", glove: "#8a5a3c", coat: "#3a4a2a", pants: "#2a2a30", hair: "#111", hat: "cap", hatCol: "#2a2a2a" } as Look, z: 6.2, x0: -20, v: 1.1, um: "" },
+    { L: { skin: "#f2d0b0", glove: "#f2d0b0", coat: "#c2a070", coatLong: true, hair: "#8a6a4a", hairStyle: "short" } as Look, z: -6.0, x0: -26, v: 0.8, um: "#2a2a2a" },
+  ].map((q, k) => {
+    const p = new Person(q.L, 60 + k); s.add(p.root);
+    if (q.um) { const u = new THREE.Group(); u.add(new THREE.Mesh(new THREE.ConeGeometry(0.62, 0.32, 10, 1, true), mat(q.um, 0.5, { side: THREE.DoubleSide }))); const stick = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.9), mat("#111")); stick.position.y = -0.45; u.add(stick); u.position.set(0.12, p.H + 0.32, 0.05); p.root.add(u); }
+    return { p, ...q };
+  });
+  const onlook = [[-14.2, -5.8, 1.2], [-14.8, -4.9, 1.4], [-14.4, 5.5, 1.9], [-15.0, 4.6, 1.6], [14.6, -5.6, -1.3], [15.3, -4.8, -1.5], [14.8, 5.4, -1.9]].map(([ox, oz, oy], k) => {
+    const p = new Person({ skin: OFFICERS[(k + 2) % 7], glove: OFFICERS[(k + 2) % 7], coat: ["#5a3a6a", "#2a5a6a", "#7a5a2a", "#3a3a3a", "#6a2a2a", "#2a4a2a", "#4a4a6a"][k], hair: ["#111", "#5a3a1a", "#c45620", "#222", "#d8d0c0", "#2a1a12", "#111"][k], hairStyle: k % 3 === 0 ? "long" : "short", dress: k % 3 === 0 } as Look, 80 + k);
+    const ph = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.12, 0.012), emi("#cfe0ff", 2.5)); ph.position.set(0, -0.4, 0.05); p.armR.add(ph);
+    put(p.root, ox, 0, oz); return { p, oy, k };
+  });
   // police vehicles (arrive in the story)
   const vanA = policeVan("BP 28-715", 1, false); vanA.rotation.y = 0.18; s.add(vanA); anims.push(vanA.userData.anim);
   const vanB = policeVan("BP 29-119", 2, false); vanB.rotation.y = Math.PI - 0.12; s.add(vanB); anims.push(vanB.userData.anim);
@@ -90,7 +129,7 @@ const build = (): Record<string, Built> => {
   const ghost = new Person(SUIT, 3), tommy = new Person(JACKET, 7);
   ghost.root.userData.heat = 1; tommy.root.userData.heat = 1;
   s.add(ghost.root, tommy.root);
-  const guards = [[-3.0, -0.4, 0.25], [2.6, -0.9, -0.2], [7.8, -1.2, -0.4], [9.2, -0.4, -0.7], [-9.6, -0.2, 0.4]].map(([gx, gz, gy], k) => { const p = new Person(OFFICER(OFFICERS[k], 1.04), 20 + k); p.root.position.set(gx, 0, gz); p.root.userData.heat = 0.95; s.add(p.root); return { p, gy }; });
+  const guards = [[-3.0, -0.4, 0.25, -1.6], [2.6, -0.9, -0.2, 5.0], [7.8, -1.2, -0.4, 5.0], [9.2, -0.4, -0.7, 5.0], [-9.6, -0.2, 0.4, -1.6]].map(([gx, gz, gy, vx], k) => { const p = new Person(OFFICER(OFFICERS[k], 1.04), 20 + k); p.root.userData.heat = 0.95; s.add(p.root); return { p, gy, gx, gz, vx }; });
   const team = [0, 1, 2, 3].map((k) => { const p = new Person(OFFICER(OFFICERS[(k + 3) % OFFICERS.length], 1.04), 40 + k); p.root.userData.heat = 0.95; s.add(p.root); return p; });
   const update = (_f: number, t: number) => {
     // vehicles
@@ -113,14 +152,14 @@ const build = (): Record<string, Built> => {
     const watch = (t > sec("ghost").a + 2.5 && t < sec("ghost").a + 4.5) || (t > sec("wait").a + 1 && t < sec("wait").a + 2.6);
     const dlg = sec("dialog");
     ghost.pose(t, {
-      yaw: walking ? Math.PI / 2 : t < T_TURN ? 0.55 : lerp(0.55, -0.55, sm((t - T_TURN) / 0.6)), expr: "neutral",
+      yaw: walking ? Math.PI / 2 : t < T_TURN ? 0.55 : lerp(0.55, -0.55, sm((t - T_TURN) / 1.1)), expr: "neutral",
       headYaw: walking ? -0.15 : t < dlg.a ? 0.1 : t < T_TURN ? 0.25 : -0.2, headTilt: lookUp + (watch ? 0.35 : 0),
-      armL: watch ? 0.75 : 0, armR: t > dlg.a + 1.2 && t < dlg.a + 4.2 ? 0.45 * sm((t - dlg.a - 1.2) / 0.4) * (1 - sm((t - dlg.a - 3.7) / 0.5)) : 0,
+      armL: watch ? 0.75 : 0, armR: t > dlg.a + 1.2 && t < dlg.a + 4.2 ? 0.45 * sm((t - dlg.a - 1.2) / 0.8) * (1 - sm((t - dlg.a - 3.5) / 0.9)) : 0,
       walk: walking ? walkX(GHOST[0], t) : stepping ? -(t - T_TURN - 0.4) * 0.6 : undefined,
     });
     // Tommy
     tommy.root.position.set(...tp);
-    const turn = sm((t - T_TURN) / 0.22), restless = t > sec("tommy").a && t < sec("arrive").a;
+    const turn = sm((t - T_TURN) / 0.55), restless = t > sec("tommy").a && t < sec("arrive").a;
     tommy.pose(t, {
       yaw: walking ? Math.PI / 2 : lerp(-0.85, -1.75, turn), expr: t < dlg.a && !restless ? "smug" : "stare",
       lean: t > dlg.a + 0.8 && t < T_TURN ? 0.16 * sm((t - dlg.a - 0.8) / 0.6) : 0.02,
@@ -128,7 +167,19 @@ const build = (): Record<string, Built> => {
       walk: walking ? walkX(TOMMY[0], t) : undefined,
     });
     // guards appear once the vans have unloaded
-    guards.forEach(({ p, gy }, k) => { p.root.visible = t >= T_GUARDS; p.pose(t, { yaw: gy, expr: "neutral", headYaw: Math.sin(t * 0.5 + k) * 0.35, armL: 0.35, armR: 0.35 }); });
+    guards.forEach(({ p, gy, gx, gz, vx }, k) => {
+      const t0 = T_ARRIVE + 3.0 + k * 0.45, u = sm((t - t0) / 2.6), moving = t > t0 && t < t0 + 2.6;
+      p.root.visible = t > t0; const px = lerp(vx, gx, u), pz = lerp(-2.7, gz, u);
+      p.root.position.set(px, 0, pz);
+      p.pose(t, { yaw: moving ? Math.atan2(gx - vx, gz + 2.7) : lerp(Math.atan2(gx - vx, gz + 2.7), gy, sm((t - t0 - 2.6) / 0.8)), walk: moving ? u * Math.hypot(gx - vx, gz + 2.7) : undefined, expr: "neutral", headYaw: Math.sin(t * 0.5 + k) * 0.35, armL: 0.35, armR: 0.35 });
+    });
+    // life
+    life.forEach((q) => q(t)); rn.upd(t, new THREE.Vector3(0, 0, 0));
+    const lit2 = t >= T_LIGHTS;
+    watchers.forEach((w, k) => w.upd(t, lit2 && t > T_LIGHTS + 1.5 + k * 1.2));
+    tapes.forEach((q) => { q.obj.visible = t > T_LIGHTS + 4; });
+    passers.forEach((q) => { const x = q.x0 + q.v * t; q.p.root.visible = !lit2 || t < T_LIGHTS + 2; q.p.root.position.set(x, 0.12, q.z); q.p.pose(t, { yaw: q.v > 0 ? Math.PI / 2 : -Math.PI / 2, walk: Math.abs(q.v * t), expr: "neutral", armR: q.um ? 0.55 : 0 }); });
+    onlook.forEach(({ p, oy, k }) => { p.root.visible = t > T_LIGHTS + 5; p.root.position.y = 0.12; p.pose(t, { yaw: oy, expr: k % 2 ? "worried" : "shock", armR: k % 3 === 2 ? 0 : 0.95, headYaw: Math.sin(t * 0.6 + k) * 0.2, headTilt: 0.05 }); });
     team.forEach((p, k) => { const e = exitAt(k, t); p.root.visible = e.vis; p.root.position.set(...e.pos); p.pose(t, { yaw: e.d < 1 ? 0 : Math.PI / 2 - 0.15, walk: e.d * 0.9, expr: "neutral", armL: 0.4, armR: 0.4, lean: 0.12 }); });
   };
   return { street: { root: s, mood: NIGHT, center: [0, 0, 0], update } };
@@ -187,7 +238,8 @@ const Title: React.FC<{ f: number }> = ({ f }) => {
 };
 
 const def: Def3 = {
-  build, total: tl.total, bloom: 1.1, captionY: 1250,
+  build, total: tl.total, bloom: 1.1, captionY: 1250, xfade: 14, handheld: 0.0045, dof: 3.2,
+  env: { k: 0.55, panels: [["#ffcf7a", 26], ["#2f62ff", 6], ["#ff4a3a", 3], ["#3aff7a", 2], ["#9fb4ff", 8]] },
   words: tl.words.filter((w) => !(w.s > T_TITLE - 0.1)),
   shots: tl.shots.map((s) => ({ a: s.a, b: s.b, set: "street", cam: CAMS[s.name], whip: WHIP[s.name], thermal: s.name === "thermal", cut: s.name === "thermal" || s.name === "final" })),
   overlay: (f) => <><HUD f={f} /><Title f={f} /></>,
